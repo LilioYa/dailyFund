@@ -109,7 +109,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textCurMonValue" />
 
     <Button
-        android:id="@+id/buttonAddTransaction"
+        android:id="@+id/buttonGoToTransaction"
         android:layout_width="320dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"

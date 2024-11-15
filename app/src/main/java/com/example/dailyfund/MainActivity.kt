@@ -3,6 +3,7 @@ package com.example.dailyfund
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -33,12 +34,22 @@ class MainActivity : AppCompatActivity() {
 
         currentMoney = findViewById(R.id.textCurMonValue)
         currentMoney.text = calculateCurrentMoney()
+
+        val goTransactionsBtn = findViewById<Button>(R.id.buttonGoToTransaction)
+        goTransactionsBtn.setOnClickListener{goToTransactions(goTransactionsBtn)}
     }
 
     fun goToSettings(view: View){
         val intentToSettingsActivity = Intent(this, SettingsActivity::class.java)
         startActivity(intentToSettingsActivity)
     }
+
+    fun goToTransactions(view: View){
+        val intentToTransactionsActivity = Intent(this, TransactionsActivity::class.java)
+        startActivity(intentToTransactionsActivity)
+    }
+
+
 
     fun refresh(view: View){
         Helper.isRefreshing = true
