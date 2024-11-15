@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/beige"
+    android:outlineProvider="paddedBounds"
+    tools:context=".MainActivity">
+
+    <ImageView
+        android:id="@+id/menuImageButton"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/border_background"
+        android:contentDescription="Sandwich menu"
+        android:onClick="goToSettings"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/menu"
+        tools:ignore="HardcodedText" />
+
+    <ImageView
+        android:id="@+id/refreshImageButton"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:background="@drawable/border_background"
+        android:contentDescription="Sandwich menu"
+        android:onClick="refresh"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/refresh_arrow"
+        tools:ignore="HardcodedText" />
+
+
+    <TextView
+        android:id="@+id/textBalance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/your_balance"
+        android:textColor="@android:color/black"
+        app:layout_constraintBottom_toTopOf="@+id/textBalanceValue"
+        app:layout_constraintStart_toStartOf="@+id/textBalanceValue" />
+
+    <TextView
+        android:id="@+id/textBalanceValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/border_background"
+        android:text="under development"
+        android:textColor="@android:color/black"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.1"
+        tools:ignore="HardcodedText" />
+
+    <TextView
+        android:id="@+id/textCurrentMoney"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/money_for_today"
+        android:textColor="@android:color/black"
+        app:layout_constraintBottom_toTopOf="@+id/textCurMonValue"
+        app:layout_constraintStart_toStartOf="@+id/textCurMonValue" />
+
+    <TextView
+        android:id="@+id/textCurMonValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/border_background"
+        android:text="20,00.-"
+        android:textColor="@android:color/black"
+        android:textSize="50sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textBalanceValue"
+        tools:ignore="HardcodedText" />
+
+    <TextView
+        android:id="@+id/textTransactions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/your_transactions"
+        android:textColor="@android:color/black"
+        app:layout_constraintBottom_toTopOf="@+id/ListTransactions"
+        app:layout_constraintStart_toStartOf="@+id/ListTransactions" />
+
+    <ListView
+        android:id="@+id/ListTransactions"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="70dp"
+        android:background="@drawable/border_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textCurMonValue" />
+
+    <Button
+        android:id="@+id/buttonAddTransaction"
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="5dp"
+        android:backgroundTint="@color/darkBeige"
+        android:text="@string/add_transaction"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="@+id/ListTransactions"
+        app:layout_constraintStart_toStartOf="@+id/ListTransactions"
+        app:layout_constraintTop_toBottomOf="@+id/ListTransactions" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

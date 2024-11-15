@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">DailyFund</string>
+    <string name="add_transaction">Add Transaction</string>
+    <string name="your_transactions">Your transactions :</string>
+    <string name="money_for_today">Money for today :</string>
+    <string name="your_balance">Your balance :</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="left_arrow">left arrow</string>
+    <string name="salary">Salary :</string>
+    <string name="parameter">PARAMETER</string>
+    <string name="desired_savings">Desired Savings :</string>
+    <string name="payday_date">Payday Date :</string>
+    <string name="apply">Apply</string>
+    <string name="_24_of_the_month">24 of the month</string>
+</resources>
