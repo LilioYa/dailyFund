@@ -11,8 +11,8 @@
 
     <ImageView
         android:id="@+id/backMainButton"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_marginStart="5dp"
         android:layout_marginTop="5dp"
         android:background="@drawable/border_background"
@@ -53,7 +53,7 @@
     <EditText
         android:id="@+id/transactionTitleInput"
         android:layout_width="210dp"
-        android:layout_height="40dp"
+        android:layout_height="48dp"
         android:layout_marginStart="5dp"
         android:hint="Enter the title of the transaction"
         android:autofillHints=""
@@ -68,7 +68,7 @@
     <EditText
         android:id="@+id/transactionAmountInput"
         android:layout_width="55dp"
-        android:layout_height="40dp"
+        android:layout_height="48dp"
         android:layout_marginStart="5dp"
         android:hint="22.50"
         android:autofillHints=""
@@ -84,7 +84,7 @@
     <EditText
         android:id="@+id/transactionDateInput"
         android:layout_width="80dp"
-        android:layout_height="40dp"
+        android:layout_height="48dp"
         android:layout_marginStart="5dp"
         android:hint="11/11/2024"
         android:autofillHints=""
@@ -99,16 +99,15 @@
 
     <ImageView
         android:id="@+id/buttonAddTransaction"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="5dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:background="@drawable/border_background"
         android:contentDescription="@string/left_arrow"
         android:onClick="goToMain"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/transactionDateInput"
         app:layout_constraintTop_toBottomOf="@+id/ListTransactions"
         app:srcCompat="@drawable/plus_logo" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

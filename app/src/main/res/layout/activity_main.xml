@@ -68,11 +68,11 @@
         android:layout_height="wrap_content"
         android:text="@string/money_for_today"
         android:textColor="@android:color/black"
-        app:layout_constraintBottom_toTopOf="@+id/textCurMonValue"
-        app:layout_constraintStart_toStartOf="@+id/textCurMonValue" />
+        app:layout_constraintBottom_toTopOf="@+id/tvMoneyForToday"
+        app:layout_constraintStart_toStartOf="@+id/tvMoneyForToday" />
 
     <TextView
-        android:id="@+id/textCurMonValue"
+        android:id="@+id/tvMoneyForToday"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
@@ -84,6 +84,24 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textBalanceValue"
         tools:ignore="HardcodedText" />
+
+    <TextView
+        android:id="@+id/textCurrentMonthFund"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/current_month_fund"
+        android:textColor="@android:color/black"
+        app:layout_constraintStart_toStartOf="@+id/tvMoneyForToday"
+        app:layout_constraintTop_toBottomOf="@+id/tvMoneyForToday" />
+
+    <TextView
+        android:id="@+id/textValueCurrentMonthFund"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="___.-"
+        android:textColor="@android:color/black"
+        app:layout_constraintStart_toEndOf="@+id/textCurrentMonthFund"
+        app:layout_constraintTop_toBottomOf="@+id/tvMoneyForToday" />
 
     <TextView
         android:id="@+id/textTransactions"
@@ -106,7 +124,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textCurMonValue" />
+        app:layout_constraintTop_toBottomOf="@+id/tvMoneyForToday" />
 
     <Button
         android:id="@+id/buttonGoToTransaction"

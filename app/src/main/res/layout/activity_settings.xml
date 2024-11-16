@@ -11,8 +11,8 @@
 
     <ImageView
         android:id="@+id/backMainButton"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_marginStart="5dp"
         android:layout_marginTop="5dp"
         android:background="@drawable/border_background"
@@ -43,22 +43,22 @@
         android:text="@string/salary"
         android:textColor="@color/black"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="@+id/salaryUserInput"
-        app:layout_constraintEnd_toStartOf="@+id/salaryUserInput"
-        app:layout_constraintTop_toTopOf="@+id/salaryUserInput"
+        app:layout_constraintBottom_toBottomOf="@+id/salaryInput"
+        app:layout_constraintEnd_toStartOf="@+id/salaryInput"
+        app:layout_constraintTop_toTopOf="@+id/salaryInput"
         app:layout_constraintVertical_bias="0.5" />
 
     <EditText
-        android:id="@+id/salaryUserInput"
+        android:id="@+id/salaryInput"
         android:layout_width="160dp"
-        android:layout_height="30dp"
+        android:layout_height="48dp"
         android:layout_marginTop="70dp"
         android:layout_marginEnd="20dp"
         android:autofillHints=""
         android:background="@color/darkBeige"
         android:textColorHint="@color/white"
         android:hint="5000.-"
-        android:inputType="number"
+        android:inputType="numberDecimal"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvParameterTitle"
@@ -68,27 +68,27 @@
         android:id="@+id/tvDesiredSavingsText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/desired_savings"
+        android:text="@string/monthly_save"
         android:textColor="@color/black"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="@+id/desiredSavingsUserInput"
-        app:layout_constraintEnd_toStartOf="@+id/desiredSavingsUserInput"
-        app:layout_constraintTop_toTopOf="@+id/desiredSavingsUserInput"
+        app:layout_constraintBottom_toBottomOf="@+id/desiredSavingsInput"
+        app:layout_constraintEnd_toStartOf="@+id/desiredSavingsInput"
+        app:layout_constraintTop_toTopOf="@+id/desiredSavingsInput"
         app:layout_constraintVertical_bias="0.5" />
 
     <EditText
-        android:id="@+id/desiredSavingsUserInput"
+        android:id="@+id/desiredSavingsInput"
         android:layout_width="160dp"
-        android:layout_height="30dp"
+        android:layout_height="48dp"
         android:layout_marginTop="20dp"
         android:autofillHints=""
         android:hint="1000.-"
         android:textSize="20sp"
         android:background="@color/darkBeige"
         android:textColorHint="@color/white"
-        android:inputType="number"
-        app:layout_constraintStart_toStartOf="@+id/salaryUserInput"
-        app:layout_constraintTop_toBottomOf="@+id/salaryUserInput"
+        android:inputType="numberDecimal"
+        app:layout_constraintStart_toStartOf="@+id/salaryInput"
+        app:layout_constraintTop_toBottomOf="@+id/salaryInput"
         tools:ignore="HardcodedText" />
 
     <TextView
@@ -98,15 +98,15 @@
         android:text="@string/payday_date"
         android:textColor="@color/black"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="@+id/paydayDateUserInput"
-        app:layout_constraintEnd_toStartOf="@+id/paydayDateUserInput"
-        app:layout_constraintTop_toTopOf="@+id/paydayDateUserInput"
+        app:layout_constraintBottom_toBottomOf="@+id/paydayDateInput"
+        app:layout_constraintEnd_toStartOf="@+id/paydayDateInput"
+        app:layout_constraintTop_toTopOf="@+id/paydayDateInput"
         app:layout_constraintVertical_bias="0.5" />
 
     <EditText
-        android:id="@+id/paydayDateUserInput"
+        android:id="@+id/paydayDateInput"
         android:layout_width="160dp"
-        android:layout_height="30dp"
+        android:layout_height="48dp"
         android:layout_marginTop="20dp"
         android:hint="@string/_24_of_the_month"
         android:autofillHints=""
@@ -114,8 +114,34 @@
         android:background="@color/darkBeige"
         android:textColorHint="@color/white"
         android:inputType="date"
-        app:layout_constraintStart_toStartOf="@+id/desiredSavingsUserInput"
-        app:layout_constraintTop_toBottomOf="@+id/desiredSavingsUserInput" />
+        app:layout_constraintStart_toStartOf="@+id/desiredSavingsInput"
+        app:layout_constraintTop_toBottomOf="@+id/desiredSavingsInput" />
+
+    <TextView
+        android:id="@+id/tvCurrentMonthFund"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/current_month_fund"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/currentMonthFundInput"
+        app:layout_constraintEnd_toStartOf="@+id/currentMonthFundInput"
+        app:layout_constraintTop_toTopOf="@+id/currentMonthFundInput"
+        app:layout_constraintVertical_bias="0.5" />
+
+    <EditText
+        android:id="@+id/currentMonthFundInput"
+        android:layout_width="160dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="20dp"
+        android:hint="5540.75.-"
+        android:autofillHints=""
+        android:textSize="20sp"
+        android:background="@color/darkBeige"
+        android:textColorHint="@color/white"
+        android:inputType="numberDecimal"
+        app:layout_constraintStart_toStartOf="@+id/paydayDateInput"
+        app:layout_constraintTop_toBottomOf="@+id/paydayDateInput" />
 
     <Button
         android:id="@+id/buttonApply"

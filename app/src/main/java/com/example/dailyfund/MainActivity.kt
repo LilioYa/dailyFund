@@ -10,12 +10,12 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import java.text.SimpleDateFormat
-import java.util.Date
 
 class MainActivity : AppCompatActivity() {
     lateinit var currentMoney: TextView
+    lateinit var tvCurrentMonthFund: TextView
     var salary: Float = -1f
+    var currentMonthFund = -1f
     var desiredSavings: Float = -1f
     var paydayDate: Int = -1
 
@@ -31,12 +31,23 @@ class MainActivity : AppCompatActivity() {
         salary = intent.getFloatExtra("salary", -1f)
         desiredSavings = intent.getFloatExtra("desired_savings_save", -1f)
         paydayDate = intent.getIntExtra("payday_date_save", -1)
+        currentMonthFund = intent.getFloatExtra("current_month_fund", -1f)
 
-        currentMoney = findViewById(R.id.textCurMonValue)
+        //update currentMonthFund
+        currentMonthFund = if(Helper.dateData("day") == paydayDate) salary - desiredSavings else currentMonthFund
+
+        //Always display in the end of the onCreate()
+        currentMoney = findViewById(R.id.tvMoneyForToday)
         currentMoney.text = calculateCurrentMoney()
 
+        tvCurrentMonthFund = findViewById(R.id.textValueCurrentMonthFund)
+        tvCurrentMonthFund.text = currentMonthFund.toString()
+
+
         val goTransactionsBtn = findViewById<Button>(R.id.buttonGoToTransaction)
-        goTransactionsBtn.setOnClickListener{goToTransactions(goTransactionsBtn)}
+        goTransactionsBtn.setOnClickListener{
+            goToTransactions(goTransactionsBtn)
+        }
     }
 
     fun goToSettings(view: View){
@@ -49,50 +60,20 @@ class MainActivity : AppCompatActivity() {
         startActivity(intentToTransactionsActivity)
     }
 
-
-
     fun refresh(view: View){
         Helper.isRefreshing = true
         Toast.makeText(this, "Refreshing...", Toast.LENGTH_SHORT).show()
         goToSettings(currentMoney)
     }
 
-    private fun daysLeft(endDate:Int = 0):Int{
-        val formatter = SimpleDateFormat("yyyy-MM-dd")
-        val date = Date()
-        val current = formatter.format(date)
-
-        val day = current.substring(8, 10).toInt()
-
-        if(endDate != 0){
-            return endDate - day + 1
-        }else{
-            val year = current.substring(0,4).toInt()
-            val month = current.substring(5, 7).toInt()
-
-            var maxDay = 31
-            if (month == 2){    //february
-                maxDay = 28
-                if (year % 100 != 0 || year % 400 == 0){ //Leap year
-                    maxDay = 29
-                }
-            }else if (month % 2 == 0){
-                maxDay = if(month <= 6) 30 else 31
-            }else if (month % 2 == 1) {
-                maxDay = if (month <= 6) 31 else 30
-            }
-            return maxDay - day + 1
-        }
-    }
-
     private fun calculateCurrentMoney():String{
-        if(salary == -1f || desiredSavings == -1f || paydayDate == -1){
+        val daysLeft = if(paydayDate == Helper.dateData("day")) Helper.daysInTheMonth() else paydayDate - Helper.dateData("day")
+        if(currentMonthFund == -1f || desiredSavings == -1f || paydayDate == -1 || salary == -1f){
             return "Go in settings and apply"
         }else{
-            val amountPerDay = (salary - desiredSavings) / daysLeft(paydayDate)
+            val amountPerDay = currentMonthFund / daysLeft
             val formattedAmount = "%.2f".format(amountPerDay).replace(".", ",")
             return "$formattedAmount.-"
-
         }
     }
 }

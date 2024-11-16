@@ -23,9 +23,10 @@
     <string name="left_arrow">left arrow</string>
     <string name="salary">Salary :</string>
     <string name="parameter">PARAMETER</string>
-    <string name="desired_savings">Desired Savings :</string>
+    <string name="monthly_save">Monthly save :</string>
     <string name="payday_date">Payday Date :</string>
     <string name="apply">Apply</string>
     <string name="_24_of_the_month">24 of the month</string>
     <string name="transactions">TRANSACTIONS</string>
+    <string name="current_month_fund">Current month fund :</string>
 </resources>
