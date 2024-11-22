@@ -9,7 +9,6 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.enableSavedStateHandles
 
 class SettingsActivity : AppCompatActivity() {
     lateinit var salary : EditText
@@ -45,7 +44,7 @@ class SettingsActivity : AppCompatActivity() {
         salarySave = sharedPreferences.getFloat("salary", -1f)
         desiredSavingsSave = sharedPreferences.getFloat("desired_savings", -1f)
         paydayDateSave = sharedPreferences.getInt("payday_date", -1)
-        currentMonthFundSave = sharedPreferences.getFloat("current_month_fund", -1f)
+        currentMonthFundSave = intent.getFloatExtra("current_month_fund", sharedPreferences.getFloat("current_month_fund", -1f))
 
         //apply save values
         salary.setText(if (salarySave == -1f) "" else salarySave.toString())

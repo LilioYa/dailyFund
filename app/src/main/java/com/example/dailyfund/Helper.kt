@@ -43,8 +43,7 @@ class Helper {
             }
         }
 
-        fun daysInTheMonth():Int {
-            val month = dateData("month")
+        fun daysInTheMonth(month:Int = dateData("month")):Int {
             val year = dateData("year")
 
             if (month == 2) {    //february
