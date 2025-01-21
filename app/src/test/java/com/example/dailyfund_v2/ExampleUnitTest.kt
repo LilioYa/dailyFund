@@ -1,4 +1,4 @@
-package com.example.dailyfund
+package com.example.dailyfund_v2
 
 import org.junit.Test
 

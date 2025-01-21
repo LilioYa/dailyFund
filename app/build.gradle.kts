@@ -4,13 +4,13 @@ plugins {
 }
 
 android {
-    namespace = "com.example.dailyfund"
-    compileSdk = 34
+    namespace = "com.example.dailyfund_v2"
+    compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.dailyfund"
+        applicationId = "com.example.dailyfund_v2"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -42,7 +42,7 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
-    implementation(libs.androidx.preference)
+    implementation(libs.gson)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
