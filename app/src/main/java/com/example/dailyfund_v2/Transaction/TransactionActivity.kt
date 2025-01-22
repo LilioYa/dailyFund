@@ -16,6 +16,7 @@ import com.example.dailyfund_v2.PreferencesManager
 import com.example.dailyfund_v2.R
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import java.util.Collections
 
 class TransactionActivity : AppCompatActivity() {
     private lateinit var preferencesManager: PreferencesManager
@@ -85,8 +86,9 @@ class TransactionActivity : AppCompatActivity() {
             return
         }
         myTransactions.getMyTransactions().add(Transaction(etTitle.text.toString(), etAmount.text.toString().toFloat(), etDate.text.toString()))
-        // Reverse the list of transactions
-        myTransactions.setMyTransactions(myTransactions.getMyTransactions().asReversed().toMutableList())
+
+        // Sort the list of transactions in descending order based on the date
+        myTransactions.getMyTransactions().sort()
 
         adapter = TransactionAdapter(this, myTransactions)
         lvTransactions.setAdapter(adapter)
