@@ -2,6 +2,7 @@ package com.example.dailyfund_v2.Transaction
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -70,6 +71,10 @@ class TransactionActivity : AppCompatActivity() {
 
         val btnAddTransaction = findViewById<Button>(R.id.btn_add_transaction)
         btnAddTransaction.setOnClickListener{addTransaction(btnAddTransaction)}
+
+        lvTransactions.setOnItemClickListener { parent, view, position, id ->
+            showPopup(view, position)
+        }
     }
 
     fun navigateToMain(view: View){
@@ -103,5 +108,25 @@ class TransactionActivity : AppCompatActivity() {
         etAmount.text.clear()
         etDate.text.clear()
         etDate.setText(preFillDate)
+    }
+
+    private fun showPopup(view: View, position: Int){
+        val popupMenu = androidx.appcompat.widget.PopupMenu(this, view)
+        popupMenu.inflate(R.menu.transaction_popup)
+
+        popupMenu.setOnMenuItemClickListener{item ->
+            when(item.itemId){
+                R.id.item_edit -> {
+                    Helper.showToast(this, "Edit")
+                }
+                R.id.item_delete -> {
+                    myTransactions.getMyTransactions().removeAt(position)
+                    preferencesManager.myTransactionsJson = gson.toJson(myTransactions.getMyTransactions())
+                    adapter.notifyDataSetChanged()
+                }
+            }
+            false
+        }
+        popupMenu.show()
     }
 }
