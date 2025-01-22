@@ -120,6 +120,7 @@ class TransactionActivity : AppCompatActivity() {
                     Helper.showToast(this, "Edit")
                 }
                 R.id.item_delete -> {
+                    preferencesManager.currentMonthFund += myTransactions.getMyTransactions()[position].amount
                     myTransactions.getMyTransactions().removeAt(position)
                     preferencesManager.myTransactionsJson = gson.toJson(myTransactions.getMyTransactions())
                     adapter.notifyDataSetChanged()
