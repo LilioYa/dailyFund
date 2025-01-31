@@ -11,17 +11,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-
 import com.example.dailyfund_v2.Helper.Companion.dateData
 import com.example.dailyfund_v2.Helper.Companion.daysInTheMonth
 import com.example.dailyfund_v2.Transaction.TransactionsActivity
 
 class MainActivity : AppCompatActivity() {
-private lateinit var preferencesManager: PreferencesManager
+    private lateinit var preferencesManager: PreferencesManager
 
-private lateinit var tvDailyFund: TextView
-private lateinit var tvBalance: TextView
-/*private lateinit var tvCurrentMonthFund: TextView*/
+    private lateinit var tvDailyFund: TextView
+    private lateinit var tvBalance: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,27 +34,67 @@ private lateinit var tvBalance: TextView
 
         tvDailyFund = findViewById(R.id.tv_daily_fund)
         tvBalance = findViewById(R.id.tv_balance)
-        /*tvCurrentMonthFund = findViewById(R.id.tv_month_fund_value)*/
 
-        preferencesManager.currentMonthFund += if(dateData("day") == preferencesManager.paydayDate) preferencesManager.salary - preferencesManager.desiredMonthlySavings else 0f
+        val currentDay = dateData("day")
+        val currentMonth = dateData("month")
 
-        /*tvCurrentMonthFund.text = preferencesManager.currentMonthFund.toString()*/
-        tvDailyFund.text = calculateCurrentMoney()
+        // Mise à jour du solde mensuel le jour de paie (une seule fois par mois)
+        if (currentDay == preferencesManager.payDate && currentMonth != preferencesManager.lastPayDateProcessedMonth) {
+            preferencesManager.currentMonthFund += preferencesManager.salary - preferencesManager.desiredMonthlySavings
+            updateMoneyPerDay()
+            preferencesManager.lastPayDateProcessedMonth = currentMonth
+        }
 
-        val settingsButton = findViewById<ImageButton>(R.id.btn_settings)
-        settingsButton.setOnClickListener{navigateToSettings()}
+        // Mise à jour de l'argent quotidien en début de journée
+        if (currentDay != preferencesManager.lastDayProcessed) {
+            preferencesManager.moneyForToday = preferencesManager.moneyPerDay
+            preferencesManager.lastDayProcessed = currentDay
+        }
 
-        val transactionButton = findViewById<ImageButton>(R.id.btn_transactions)
-        transactionButton.setOnClickListener{navigateToTransaction()}
+        updateBalance()
 
-        val spreadButton = findViewById<Button>(R.id.btn_spread)
-        spreadButton.setOnClickListener{spread(spreadButton)}
+        // Mise à jour de l'affichage
+        tvDailyFund.text = Helper.formatMoney(preferencesManager.moneyForToday)
+        tvBalance.text = Helper.formatMoney(preferencesManager.balance)
 
-        val sortButton = findViewById<Button>(R.id.btn_sort)
-        sortButton.setOnClickListener{sortBtn(sortButton)}
+        // Gestion des boutons
+        findViewById<ImageButton>(R.id.btn_settings).setOnClickListener { navigateToSettings() }
+        findViewById<ImageButton>(R.id.btn_transactions).setOnClickListener { navigateToTransaction() }
+        findViewById<Button>(R.id.btn_spread).setOnClickListener { spread() }
+        findViewById<Button>(R.id.btn_sort).setOnClickListener { sortBtn() }
     }
 
-    fun navigateToSettings(){
+    private fun updateMoneyPerDay(){
+        preferencesManager.moneyPerDay = preferencesManager.currentMonthFund / daysUntilPayDate()
+    }
+
+    private fun updateBalance() {
+        val difference = preferencesManager.moneyForToday - preferencesManager.moneyPerDay
+        preferencesManager.balance += difference
+        updateBalanceColor()
+    }
+
+    private fun updateBalanceColor() {
+        val balanceValue = preferencesManager.balance
+        tvBalance.setTextColor(
+                if (balanceValue < 0) getColor(R.color.red) else getColor(R.color.green)
+        )
+    }
+
+    private fun daysUntilPayDate(): Int {
+        val daysLeft = when {
+            preferencesManager.payDate == dateData("day") -> daysInTheMonth()
+            dateData("day") > preferencesManager.payDate -> {
+                val daysThisMonth = daysInTheMonth() - dateData("day")
+                val daysNextMonth = preferencesManager.payDate
+                daysThisMonth + daysNextMonth
+            }
+            else -> preferencesManager.payDate - dateData("day")
+        }
+        return daysLeft
+    }
+
+    private fun navigateToSettings() {
         val intent = Intent(this, SettingsActivity::class.java)
         val options = ActivityOptionsCompat.makeCustomAnimation(
                 this,
@@ -66,7 +104,7 @@ private lateinit var tvBalance: TextView
         startActivity(intent, options.toBundle())
     }
 
-    private fun navigateToTransaction(){
+    private fun navigateToTransaction() {
         val intent = Intent(this, TransactionsActivity::class.java)
         val options = ActivityOptionsCompat.makeCustomAnimation(
                 this,
@@ -76,30 +114,17 @@ private lateinit var tvBalance: TextView
         startActivity(intent, options.toBundle())
     }
 
-    private fun calculateCurrentMoney(): String {
-        val daysLeft = when {
-            preferencesManager.paydayDate == dateData("day") -> daysInTheMonth()
-            dateData("day") > preferencesManager.paydayDate -> {
-                val daysThisMonth = daysInTheMonth() - dateData("day")
-                val daysNextMonth = preferencesManager.paydayDate
-                daysThisMonth + daysNextMonth
-            }
-            else -> preferencesManager.paydayDate - dateData("day")
-        }
-
-        if (preferencesManager.currentMonthFund == -1f || preferencesManager.desiredMonthlySavings == -1f || preferencesManager.paydayDate == -1 || preferencesManager.salary == -1f) {
-            return "Go in settings and apply"
-        } else {
-            val amountPerDay = preferencesManager.currentMonthFund / daysLeft
-            val formattedAmount = "%.2f".format(amountPerDay).replace(".", ",")
-            return "$formattedAmount.-"
-        }
-    }
-    fun spread(view: View){
-        Helper.showToast(this, "Coming soon")
+    private fun spread(){
+        val lastMoneyPerDay = preferencesManager.moneyPerDay
+        val lastMoneyForToday = preferencesManager.moneyForToday
+        updateMoneyPerDay()
+        preferencesManager.moneyForToday +=  lastMoneyPerDay - lastMoneyForToday
+        updateBalance()
+        tvDailyFund.text = Helper.formatMoney(preferencesManager.moneyForToday)
+        tvBalance.text = Helper.formatMoney(preferencesManager.balance)
     }
 
-    fun sortBtn(view: View){
+    private fun sortBtn() {
         Helper.showToast(this, "Coming soon")
     }
 }

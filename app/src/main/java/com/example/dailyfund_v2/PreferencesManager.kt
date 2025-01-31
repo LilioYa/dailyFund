@@ -17,12 +17,17 @@ class PreferencesManager(context: Context) {
         set(value) = editor.putFloat("salary", value).apply()
 
     var desiredMonthlySavings: Float
-        get() = sharedPreferences.getFloat("desiredSavings", Helper.NOT_SET_FLOAT)
-        set(value) = editor.putFloat("desiredSavings", value).apply()
+        get() = sharedPreferences.getFloat("desiredMonthlySavings", Helper.NOT_SET_FLOAT)
+        set(value) = editor.putFloat("desiredMonthlySavings", value).apply()
 
-    var paydayDate: Int
-        get() = sharedPreferences.getInt("paydayDate", Helper.NOT_SET_INT)
-        set(value) = editor.putInt("paydayDate", value).apply()
+    var payDate: Int
+        get() = sharedPreferences.getInt("payDate", Helper.NOT_SET_INT)
+        set(value) = editor.putInt("payDate", value).apply()
+
+    var lastPayDateProcessedMonth: Int
+        get() = sharedPreferences.getInt("lastPayDateProcessedMonth", -1)
+        set(value) = sharedPreferences.edit().putInt("lastPayDateProcessedMonth", value).apply()
+
 
     var currentMonthFund: Float
         get() = sharedPreferences.getFloat("currentMonthFund", Helper.NOT_SET_FLOAT)
@@ -31,4 +36,23 @@ class PreferencesManager(context: Context) {
     var myTransactionsJson: String
     get() = sharedPreferences.getString("myTransactions", "[]") ?: "[]"
     set(value) = editor.putString("myTransactions", value).apply()
+
+    // Properties to manage balance system
+
+    var balance: Float
+        get() = sharedPreferences.getFloat("balance", 0f)
+        set(value) = editor.putFloat("balance", value).apply()
+
+    var moneyPerDay: Float
+        get() = sharedPreferences.getFloat("moneyPerDay", Helper.NOT_SET_FLOAT)
+        set(value) = editor.putFloat("moneyPerDay", value).apply()
+
+    var moneyForToday: Float
+        get() = sharedPreferences.getFloat("moneyForToday", Helper.NOT_SET_FLOAT)
+        set(value) = editor.putFloat("moneyForToday", value).apply()
+
+    var lastDayProcessed: Int
+        get() = sharedPreferences.getInt("lastDayProcessed", -1)
+        set(value) = editor.putInt("lastDayProcessed", value).apply()
+
 }

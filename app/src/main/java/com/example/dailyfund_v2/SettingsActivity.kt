@@ -17,7 +17,7 @@ class SettingsActivity : AppCompatActivity() {
 
     private lateinit var etSalary: EditText
     private lateinit var etDesiredMonthlySavings: EditText
-    private lateinit var etPaydayDate: EditText
+    private lateinit var etPayDate: EditText
     private lateinit var etCurrentMonthFund: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,12 +33,12 @@ class SettingsActivity : AppCompatActivity() {
 
         etSalary = findViewById(R.id.et_salary)
         etDesiredMonthlySavings = findViewById(R.id.et_desired_monthly_savings)
-        etPaydayDate = findViewById(R.id.et_payday_date)
+        etPayDate = findViewById(R.id.et_pay_date)
         etCurrentMonthFund = findViewById(R.id.et_current_month_fund)
 
         etSalary.setText(preferencesManager.salary.toString())
         etDesiredMonthlySavings.setText(preferencesManager.desiredMonthlySavings.toString())
-        etPaydayDate.setText(preferencesManager.paydayDate.toString())
+        etPayDate.setText(preferencesManager.payDate.toString())
         etCurrentMonthFund.setText(preferencesManager.currentMonthFund.toString())
 
         val btnMain = findViewById<ImageButton>(R.id.btn_main)
@@ -75,14 +75,14 @@ class SettingsActivity : AppCompatActivity() {
 
     private fun saveValue() {
         var isValueValid = Helper.saveData(this, etSalary, 0f, "salary")
-                && Helper.saveData(this, etDesiredMonthlySavings, 0f, "desired_monthly_savings")
-                && Helper.saveData(this, etPaydayDate, 0, "payday_date")
-                && Helper.saveData(this, etCurrentMonthFund, 0f, "current_month_fund")
+                && Helper.saveData(this, etDesiredMonthlySavings, 0f, "desiredMonthlySavings")
+                && Helper.saveData(this, etPayDate, 0, "payDate")
+                && Helper.saveData(this, etCurrentMonthFund, 0f, "currentMonthFund")
 
         if (isValueValid) {
             preferencesManager.salary = etSalary.text.toString().toFloat()
             preferencesManager.desiredMonthlySavings = etDesiredMonthlySavings.text.toString().toFloat()
-            preferencesManager.paydayDate = etPaydayDate.text.toString().toInt()
+            preferencesManager.payDate = etPayDate.text.toString().toInt()
             preferencesManager.currentMonthFund = etCurrentMonthFund.text.toString().toFloat()
             Helper.showToast(this, "Changes applied")
             navigateToMain()

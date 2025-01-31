@@ -89,5 +89,10 @@ class Helper {
             }
             return true
         }
+
+        fun formatMoney(amount: Float): String {
+            val formattedAmount = "%.2f".format(amount).replace(".", ",")
+            return "$formattedAmount.-"
+        }
     }
 }
