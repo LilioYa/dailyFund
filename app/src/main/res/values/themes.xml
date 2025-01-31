@@ -1,9 +1,16 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.Dailyfundv2" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Base.Theme.Dailyfundv2" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
 
     <style name="Theme.Dailyfundv2" parent="Base.Theme.Dailyfundv2" />
+
+    <style name="WindowAnimationTransition">
+        <item name="android:activityOpenEnterAnimation">@anim/animate_slide_right_enter</item>
+        <item name="android:activityOpenExitAnimation">@anim/animate_slide_right_exit</item>
+        <item name="android:activityCloseEnterAnimation">@anim/animate_slide_left_enter</item>
+        <item name="android:activityCloseExitAnimation">@anim/animate_slide_left_exit</item>
+    </style>
 </resources>

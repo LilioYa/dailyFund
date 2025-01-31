@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
+    <color name="black">#000000</color>
+    <color name="black_23">#3B000000</color>
+    <color name="black_26">#42000000</color>
+    <color name="grey">#858585</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="beige">#efe4c8</color>
-    <color name="darkBeige">#968264</color>
-    <color name="green">#95AD50</color>
-    <color name="red">#C1593F</color>
-    <color name="blue">#FC4A657D</color>
+    <color name="salt">#F1F3F4</color>
+    <color name="salt2">#F2F2F2</color>
+    <color name="beige">#F2EDD7</color>
+    <color name="brown">#755139</color>
+    <color name="green">#97BC62</color>
+    <color name="red">#CC313D</color>
 </resources>

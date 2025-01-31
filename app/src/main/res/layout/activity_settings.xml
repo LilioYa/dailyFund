@@ -5,165 +5,221 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/beige"
+    android:background="@color/black"
     tools:context=".SettingsActivity">
 
-    <ImageButton
-        android:id="@+id/btn_main"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:src="@drawable/left_arrow_icon"
-        android:background="@drawable/border_background"
-        android:scaleType="fitCenter"
-        android:onClick="navigateToMain"
-        android:contentDescription="@string/navigate_to_main"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="5dp"
-        />
-
-    <TextView
-        android:id="@+id/tv_settings"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/border_background"
-        android:text="@string/settings"
-        android:textColor="@color/black"
-        android:textSize="30sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.1"
-        app:layout_constraintBottom_toBottomOf="parent"/>
-
-    <EditText
-        android:id="@+id/et_salary"
-        android:layout_width="130dp"
-        android:layout_height="48dp"
-        android:background="@color/darkBeige"
-        android:textSize="20sp"
-        android:textColor="@color/black"
-        android:hint="5000,00.-"
-        android:textColorHint="@color/white"
-        android:inputType="numberDecimal"
-        app:layout_constraintTop_toBottomOf="@id/tv_settings"
-        app:layout_constraintVertical_bias="0.1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginEnd="20dp"
-        tools:ignore="HardcodedText" />
-
-    <TextView
-        android:id="@+id/tv_salary"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/salary"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        app:layout_constraintTop_toTopOf="@id/et_salary"
-        app:layout_constraintBottom_toBottomOf="@id/et_salary"
-        app:layout_constraintRight_toLeftOf="@id/et_salary"
-        android:layout_marginEnd="25dp" />
-
-    <EditText
-        android:id="@+id/et_desired_monthly_save"
-        android:layout_width="130dp"
-        android:layout_height="48dp"
-        android:background="@color/darkBeige"
-        android:textSize="20sp"
-        android:textColor="@color/black"
-        android:hint="1250,00.-"
-        android:textColorHint="@color/white"
-        android:inputType="numberDecimal"
-        app:layout_constraintTop_toBottomOf="@id/et_salary"
-        android:layout_marginTop="50dp"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginEnd="20dp"
-        tools:ignore="HardcodedText" />
-
-    <TextView
-        android:id="@+id/tv_desired_monthly_save"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/desired_monthly_savings"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        app:layout_constraintTop_toTopOf="@id/et_desired_monthly_save"
-        app:layout_constraintBottom_toBottomOf="@id/et_desired_monthly_save"
-        app:layout_constraintRight_toLeftOf="@id/et_desired_monthly_save"
-        android:layout_marginEnd="25dp" />
-
-    <EditText
-        android:id="@+id/et_payday_date"
-        android:layout_width="130dp"
-        android:layout_height="48dp"
-        android:background="@color/darkBeige"
-        android:textSize="20sp"
-        android:textColor="@color/black"
-        android:hint="25"
-        android:textColorHint="@color/white"
-        android:inputType="date"
-        app:layout_constraintTop_toBottomOf="@id/et_desired_monthly_save"
-        android:layout_marginTop="50dp"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginEnd="20dp"
-        tools:ignore="HardcodedText" />
-
-    <TextView
-        android:id="@+id/tv_payday_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/payday_date"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        app:layout_constraintTop_toTopOf="@id/et_payday_date"
-        app:layout_constraintBottom_toBottomOf="@id/et_payday_date"
-        app:layout_constraintRight_toLeftOf="@id/et_payday_date"
-        android:layout_marginEnd="25dp" />
-
-    <EditText
-        android:id="@+id/et_current_month_fund"
-        android:layout_width="130dp"
-        android:layout_height="48dp"
-        android:background="@color/darkBeige"
-        android:textSize="20sp"
-        android:textColor="@color/black"
-        android:hint="5542,75.-"
-        android:textColorHint="@color/white"
-        android:inputType="numberDecimal"
-        app:layout_constraintTop_toBottomOf="@id/et_payday_date"
-        android:layout_marginTop="50dp"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginEnd="20dp"
-        tools:ignore="HardcodedText" />
-
-    <TextView
-        android:id="@+id/tv_current_month_fund"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/current_month_fund"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        app:layout_constraintTop_toTopOf="@id/et_current_month_fund"
-        app:layout_constraintBottom_toBottomOf="@id/et_current_month_fund"
-        app:layout_constraintRight_toLeftOf="@id/et_current_month_fund"
-        android:layout_marginEnd="25dp" />
-
-    <Button
-        android:id="@+id/btn_apply"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/darkBeige"
-        android:text="@string/apply"
-        android:textColor="@color/black"
-        android:textSize="22sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginStart="20sp"
-        android:layout_marginEnd="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="10dp" />
+        android:layout_height="match_parent"
+        android:background="@color/salt"
+        android:paddingLeft="20dp"
+        android:paddingTop="40dp"
+        android:paddingRight="20dp"
+        android:paddingBottom="40dp">
+
+        <TextView
+            android:id="@+id/tv_settings_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/settings"
+            android:textSize="40sp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/inter_18pt_bold"
+            android:layout_centerHorizontal="true" />
+
+        <LinearLayout
+            android:id="@+id/ll_data"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/box_style"
+            android:backgroundTint="@color/white"
+            android:orientation="vertical"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            android:layout_below="@id/tv_settings_title"
+            android:layout_marginTop="20dp"
+            android:elevation="4dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_18pt_regular"
+                android:paddingTop="15dp"
+                android:text="@string/salary"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/et_salary"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@drawable/et_bg"
+                android:hint="@string/enter_your_salary"
+                android:textSize="14sp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/grey"
+                android:fontFamily="@font/inter_18pt_regular"
+                android:padding="10dp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="15dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_18pt_regular"
+                android:text="@string/desired_monthly_savings"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/et_desired_monthly_savings"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@drawable/et_bg"
+                android:fontFamily="@font/inter_18pt_regular"
+                android:hint="@string/Enter_your_desired_monthly_savings"
+                android:padding="10dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/grey"
+                android:textSize="14sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="15dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_18pt_regular"
+                android:text="@string/pay_date"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/et_payday_date"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@drawable/et_bg"
+                android:fontFamily="@font/inter_18pt_regular"
+                android:hint="@string/select_your_pay_date"
+                android:padding="10dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/grey"
+                android:textSize="14sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="15dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_18pt_regular"
+                android:text="@string/current_month_fund"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/et_current_month_fund"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@drawable/et_bg"
+                android:fontFamily="@font/inter_18pt_regular"
+                android:hint="@string/enter_your_salary"
+                android:padding="10dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/grey"
+                android:textSize="14sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="30dp"/>
+
+            <Button
+                android:id="@+id/btn_apply"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/apply"
+                android:textSize="30sp"
+                android:textAllCaps="false"
+                android:textColor="@color/black"
+                android:fontFamily="@font/inter_18pt_semibold"
+                android:background="@drawable/box_style"
+                android:backgroundTint="@color/beige"
+                android:paddingStart="30dp"
+                android:paddingEnd="30dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:layout_gravity="center"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="30dp"/>
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:id="@+id/ll_navigation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerInParent="true"
+            android:background="@drawable/navigation_bar"
+            android:orientation="horizontal"
+            android:elevation="4dp">
+
+            <ImageView
+                android:id="@+id/btn_settings"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="3dp"
+                android:layout_marginStart="3dp"
+                android:background="@drawable/navigation_btn_bg"
+                android:src="@drawable/settings_logo"
+                android:scaleType="centerCrop"
+                android:padding="7dp"
+                app:tint="@color/brown" />
+
+            <View
+                android:layout_width="10dp"
+                android:layout_height="match_parent" />
+
+            <ImageButton
+                android:id="@+id/btn_main"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="3dp"
+                android:background="@null"
+                android:contentDescription="@string/navigate_to_main"
+                android:src="@drawable/budget_logo"
+                android:scaleType="centerCrop"
+                android:padding="5dp"
+                app:tint="@color/beige" />
+
+            <View
+                android:layout_width="10dp"
+                android:layout_height="match_parent" />
+            <ImageButton
+                android:id="@+id/btn_transactions"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="3dp"
+                android:layout_marginEnd="3dp"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:background="@null"
+                android:contentDescription="@string/navigate_to_transaction"
+                android:src="@drawable/transaction_logo"
+                android:scaleType="centerCrop"
+                android:padding="7dp"
+                app:tint="@color/beige"/>
+        </LinearLayout>
+    </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,16 +1,16 @@
 package com.example.dailyfund_v2
 
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
-import android.view.View
 import android.widget.Button
 import android.widget.EditText
-import android.widget.Toast
+import android.widget.ImageButton
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityOptionsCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.dailyfund_v2.Transaction.TransactionsActivity
 
 class SettingsActivity : AppCompatActivity() {
     private lateinit var preferencesManager: PreferencesManager
@@ -32,7 +32,7 @@ class SettingsActivity : AppCompatActivity() {
         preferencesManager = PreferencesManager(this)
 
         etSalary = findViewById(R.id.et_salary)
-        etDesiredMonthlySavings = findViewById(R.id.et_desired_monthly_save)
+        etDesiredMonthlySavings = findViewById(R.id.et_desired_monthly_savings)
         etPaydayDate = findViewById(R.id.et_payday_date)
         etCurrentMonthFund = findViewById(R.id.et_current_month_fund)
 
@@ -41,13 +41,35 @@ class SettingsActivity : AppCompatActivity() {
         etPaydayDate.setText(preferencesManager.paydayDate.toString())
         etCurrentMonthFund.setText(preferencesManager.currentMonthFund.toString())
 
-        val applyButton = findViewById<Button>(R.id.btn_apply)
-        applyButton.setOnClickListener{saveValue()}
+        val btnMain = findViewById<ImageButton>(R.id.btn_main)
+        btnMain.setOnClickListener{navigateToMain()}
+
+        val btnTransactions = findViewById<ImageButton>(R.id.btn_transactions)
+        btnTransactions.setOnClickListener{navigateToTransaction()}
+
+        val btnApply = findViewById<Button>(R.id.btn_apply)
+        btnApply.setOnClickListener{saveValue()}
     }
 
 
-    fun navigateToMain(view: View){
-        startActivity(Intent(this, MainActivity::class.java).apply{finish()})
+    private fun navigateToMain(){
+        val intent = Intent(this, MainActivity::class.java)
+        val options = ActivityOptionsCompat.makeCustomAnimation(
+                this,
+                R.anim.animate_slide_left_enter,
+                R.anim.animate_slide_left_exit
+        )
+        startActivity(intent, options.toBundle())
+    }
+
+    fun navigateToTransaction(){
+        val intent = Intent(this, TransactionsActivity::class.java)
+        val options = ActivityOptionsCompat.makeCustomAnimation(
+                this,
+                R.anim.animate_slide_left_enter,
+                R.anim.animate_slide_left_exit
+        )
+        startActivity(intent, options.toBundle())
     }
 
 
@@ -63,7 +85,7 @@ class SettingsActivity : AppCompatActivity() {
             preferencesManager.paydayDate = etPaydayDate.text.toString().toInt()
             preferencesManager.currentMonthFund = etCurrentMonthFund.text.toString().toFloat()
             Helper.showToast(this, "Changes applied")
-            navigateToMain(etSalary)
+            navigateToMain()
         }
     }
 }

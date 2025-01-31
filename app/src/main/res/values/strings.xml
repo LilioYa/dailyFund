@@ -5,15 +5,27 @@
     <string name="money_for_today">Money for today :</string>
     <string name="current_month_fund">Current month fund</string>
     <string name="navigate_to_main">Navigate to main</string>
-    <string name="settings">SETTINGS</string>
+    <string name="settings">Settings</string>
     <string name="salary">Salary</string>
     <string name="desired_monthly_savings">Desired monthly savings</string>
-    <string name="payday_date">Payday date</string>
+    <string name="pay_date">Pay date</string>
     <string name="apply">Apply</string>
-    <string name="transactions">TRANSACTIONS</string>
+    <string name="transactions">Transactions</string>
     <string name="title">Title</string>
     <string name="amount">Amount</string>
     <string name="date">Date</string>
     <string name="add_transaction">Add Transaction</string>
     <string name="transaction">Transaction</string>
+
+    <string name="spread">Spread</string>
+
+    <string name="navigate_to_transaction">Navigate to transactions menu</string>
+    <string name="date_sort">Date ↓</string>
+    <string name="enter_your_salary">Enter your salary</string>
+    <string name="Enter_your_desired_monthly_savings">Enter your desired monthly savings</string>
+    <string name="select_your_pay_date">Select your pay date</string>
+    <string name="enter_the_transaction_title">Enter the transaction title</string>
+    <string name="select_date">Select date</string>
+    <string name="enter_the_amount">Enter the amount</string>
+    <string name="search">Search</string>
 </resources>

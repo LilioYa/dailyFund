@@ -25,18 +25,24 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:gravity="center"
+                android:gravity="start"
                 android:text="@string/title"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:fontFamily="@font/inter_18pt_medium"
+                android:paddingStart="2dp" />
 
             <TextView
                 android:id="@+id/tv_column_date"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:gravity="center"
+                android:gravity="start"
                 android:text="@string/date"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:fontFamily="@font/inter_18pt_medium"
+                android:paddingStart="2dp" />
 
         </LinearLayout>
 
@@ -58,7 +64,9 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="@string/amount"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:fontFamily="@font/inter_18pt_medium" />
         </LinearLayout>
     </LinearLayout>
 

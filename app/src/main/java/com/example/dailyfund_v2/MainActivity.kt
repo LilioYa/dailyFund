@@ -4,22 +4,24 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityOptionsCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
 import com.example.dailyfund_v2.Helper.Companion.dateData
 import com.example.dailyfund_v2.Helper.Companion.daysInTheMonth
-import com.example.dailyfund_v2.Transaction.TransactionActivity
+import com.example.dailyfund_v2.Transaction.TransactionsActivity
 
 class MainActivity : AppCompatActivity() {
 private lateinit var preferencesManager: PreferencesManager
 
 private lateinit var tvDailyFund: TextView
 private lateinit var tvBalance: TextView
-private lateinit var tvCurrentMonthFund: TextView
+/*private lateinit var tvCurrentMonthFund: TextView*/
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,25 +34,46 @@ private lateinit var tvCurrentMonthFund: TextView
         }
         preferencesManager = PreferencesManager(this)
 
-        tvDailyFund = findViewById(R.id.tv_daily_fund_value)
-        tvBalance = findViewById(R.id.tv_balance_value)
-        tvCurrentMonthFund = findViewById(R.id.tv_month_fund_value)
+        tvDailyFund = findViewById(R.id.tv_daily_fund)
+        tvBalance = findViewById(R.id.tv_balance)
+        /*tvCurrentMonthFund = findViewById(R.id.tv_month_fund_value)*/
 
         preferencesManager.currentMonthFund += if(dateData("day") == preferencesManager.paydayDate) preferencesManager.salary - preferencesManager.desiredMonthlySavings else 0f
 
-        tvCurrentMonthFund.text = preferencesManager.currentMonthFund.toString()
+        /*tvCurrentMonthFund.text = preferencesManager.currentMonthFund.toString()*/
         tvDailyFund.text = calculateCurrentMoney()
 
-        val transactionButton = findViewById<Button>(R.id.btn_transaction)
-        transactionButton.setOnClickListener{navigateToTransaction(transactionButton)}
+        val settingsButton = findViewById<ImageButton>(R.id.btn_settings)
+        settingsButton.setOnClickListener{navigateToSettings()}
+
+        val transactionButton = findViewById<ImageButton>(R.id.btn_transactions)
+        transactionButton.setOnClickListener{navigateToTransaction()}
+
+        val spreadButton = findViewById<Button>(R.id.btn_spread)
+        spreadButton.setOnClickListener{spread(spreadButton)}
+
+        val sortButton = findViewById<Button>(R.id.btn_sort)
+        sortButton.setOnClickListener{sortBtn(sortButton)}
     }
 
-    fun navigateToSettings(view: View){
-        startActivity(Intent(this, SettingsActivity::class.java).apply{finish()})
+    fun navigateToSettings(){
+        val intent = Intent(this, SettingsActivity::class.java)
+        val options = ActivityOptionsCompat.makeCustomAnimation(
+                this,
+                R.anim.animate_slide_right_enter,
+                R.anim.animate_slide_right_exit
+        )
+        startActivity(intent, options.toBundle())
     }
 
-    private fun navigateToTransaction(view: View){
-        startActivity(Intent(this, TransactionActivity::class.java).apply{finish()})
+    private fun navigateToTransaction(){
+        val intent = Intent(this, TransactionsActivity::class.java)
+        val options = ActivityOptionsCompat.makeCustomAnimation(
+                this,
+                R.anim.animate_slide_left_enter,
+                R.anim.animate_slide_left_exit
+        )
+        startActivity(intent, options.toBundle())
     }
 
     private fun calculateCurrentMoney(): String {
@@ -72,5 +95,11 @@ private lateinit var tvCurrentMonthFund: TextView
             return "$formattedAmount.-"
         }
     }
+    fun spread(view: View){
+        Helper.showToast(this, "Coming soon")
+    }
 
+    fun sortBtn(view: View){
+        Helper.showToast(this, "Coming soon")
+    }
 }
