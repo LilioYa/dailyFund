@@ -5,7 +5,7 @@
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
 
-    <style name="Theme.Dailyfundv2" parent="Base.Theme.Dailyfundv2" />
+    <style name="Theme.DailyFund" parent="Base.Theme.Dailyfundv2" />
 
     <style name="WindowAnimationTransition">
         <item name="android:activityOpenEnterAnimation">@anim/animate_slide_right_enter</item>

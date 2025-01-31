@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">dailyfund-v2</string>
+    <string name="app_name">DailyFund</string>
     <string name="your_balance">Your balance :</string>
     <string name="navigate_to_settings">Navigate to settings</string>
     <string name="money_for_today">Money for today :</string>

@@ -8,7 +8,7 @@ android {
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.dailyfund_v2"
+        applicationId = "com.example.DailyFund"
         minSdk = 24
         targetSdk = 35
         versionCode = 1
