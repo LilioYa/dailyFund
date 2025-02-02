@@ -36,10 +36,17 @@ class SettingsActivity : AppCompatActivity() {
         etPayDate = findViewById(R.id.et_pay_date)
         etCurrentMonthFund = findViewById(R.id.et_current_month_fund)
 
-        etSalary.setText(preferencesManager.salary.toString())
-        etDesiredMonthlySavings.setText(preferencesManager.desiredMonthlySavings.toString())
-        etPayDate.setText(preferencesManager.payDate.toString())
-        etCurrentMonthFund.setText(preferencesManager.currentMonthFund.toString())
+        val salary = if (preferencesManager.salary == Helper.NOT_SET_FLOAT) "" else preferencesManager.salary.toString()
+        etSalary.setText(salary)
+
+        val desiredMonthlySavings = if (preferencesManager.desiredMonthlySavings == Helper.NOT_SET_FLOAT) "" else preferencesManager.desiredMonthlySavings.toString()
+        etDesiredMonthlySavings.setText(desiredMonthlySavings)
+
+        val payDate = if (preferencesManager.payDate == Helper.NOT_SET_INT) "" else preferencesManager.payDate.toString()
+        etPayDate.setText(payDate)
+
+        val currentMonthFund = if (preferencesManager.currentMonthFund == Helper.NOT_SET_FLOAT) "" else preferencesManager.currentMonthFund.toString()
+        etCurrentMonthFund.setText(currentMonthFund)
 
         val btnMain = findViewById<ImageButton>(R.id.btn_main)
         btnMain.setOnClickListener{navigateToMain()}

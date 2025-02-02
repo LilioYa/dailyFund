@@ -10,7 +10,7 @@ import java.util.Date
 class Helper {
     companion object {
         const val NOT_SET_FLOAT = - 1f
-        const val NOT_SET_INT = - 1
+        const val NOT_SET_INT = -1
 
         fun showToast(context: Context, text: String, duration: Int = Toast.LENGTH_SHORT) {
             Toast.makeText(context, text, duration).show()

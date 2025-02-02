@@ -50,17 +50,19 @@ class MainActivity : AppCompatActivity() {
             preferencesManager.moneyForToday = preferencesManager.moneyPerDay
             preferencesManager.lastDayProcessed = currentDay
         }
-
-        updateBalance()
+        if(preferencesManager.currentMonthFund != Helper.NOT_SET_FLOAT){
+            updateMoneyPerDay()
+            updateBalance()
+        }
 
         // Mise à jour de l'affichage
-        tvDailyFund.text = Helper.formatMoney(preferencesManager.moneyForToday)
+        tvDailyFund.text = if(preferencesManager.moneyForToday == Helper.NOT_SET_FLOAT) "Set some values" else Helper.formatMoney(preferencesManager.moneyForToday)
         tvBalance.text = Helper.formatMoney(preferencesManager.balance)
 
         // Gestion des boutons
         findViewById<ImageButton>(R.id.btn_settings).setOnClickListener { navigateToSettings() }
         findViewById<ImageButton>(R.id.btn_transactions).setOnClickListener { navigateToTransaction() }
-        findViewById<Button>(R.id.btn_spread).setOnClickListener { spread() }
+        findViewById<Button>(R.id.btn_spread).setOnClickListener { if(preferencesManager.balance != 0f){spread()} }
         findViewById<Button>(R.id.btn_sort).setOnClickListener { sortBtn() }
     }
 
@@ -69,7 +71,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateBalance() {
-        val difference = preferencesManager.moneyForToday - preferencesManager.moneyPerDay
+        val difference = preferencesManager.moneyPerDay - preferencesManager.moneyForToday
         preferencesManager.balance += difference
         updateBalanceColor()
     }
