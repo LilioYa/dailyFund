@@ -61,12 +61,15 @@ class SettingsActivity : AppCompatActivity() {
 
     private fun navigateToMain(){
         val intent = Intent(this, MainActivity::class.java)
+        intent.putExtra("fromSettings", true)
         val options = ActivityOptionsCompat.makeCustomAnimation(
                 this,
                 R.anim.animate_slide_left_enter,
                 R.anim.animate_slide_left_exit
         )
         startActivity(intent, options.toBundle())
+
+        finish()
     }
 
     fun navigateToTransaction(){
@@ -77,6 +80,7 @@ class SettingsActivity : AppCompatActivity() {
                 R.anim.animate_slide_left_exit
         )
         startActivity(intent, options.toBundle())
+        finish()
     }
 
 

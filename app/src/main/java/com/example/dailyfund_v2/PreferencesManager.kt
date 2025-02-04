@@ -25,7 +25,7 @@ class PreferencesManager(context: Context) {
         set(value) = editor.putInt("payDate", value).apply()
 
     var lastPayDateProcessedMonth: Int
-        get() = sharedPreferences.getInt("lastPayDateProcessedMonth", -1)
+        get() = sharedPreferences.getInt("lastPayDateProcessedMonth", Helper.NOT_SET_INT)
         set(value) = sharedPreferences.edit().putInt("lastPayDateProcessedMonth", value).apply()
 
 
@@ -51,8 +51,12 @@ class PreferencesManager(context: Context) {
         get() = sharedPreferences.getFloat("moneyForToday", Helper.NOT_SET_FLOAT)
         set(value) = editor.putFloat("moneyForToday", value).apply()
 
+    var previousMoneyForToday: Float
+        get() = sharedPreferences.getFloat("previousMoneyForToday", Helper.NOT_SET_FLOAT)
+        set(value) = editor.putFloat("previousMoneyForToday", value).apply()
+
     var lastDayProcessed: Int
-        get() = sharedPreferences.getInt("lastDayProcessed", -1)
+        get() = sharedPreferences.getInt("lastDayProcessed", Helper.NOT_SET_INT)
         set(value) = editor.putInt("lastDayProcessed", value).apply()
 
 }

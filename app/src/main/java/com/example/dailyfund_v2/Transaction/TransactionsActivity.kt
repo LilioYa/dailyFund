@@ -92,6 +92,7 @@ class TransactionsActivity : AppCompatActivity() {
                 R.anim.animate_slide_right_exit
         )
         startActivity(intent, options.toBundle())
+        finish()
     }
 
     fun navigateToSettings(){
@@ -102,6 +103,7 @@ class TransactionsActivity : AppCompatActivity() {
                 R.anim.animate_slide_right_exit
         )
         startActivity(intent, options.toBundle())
+        finish()
     }
 
     private fun addTransaction(view: View){
@@ -123,7 +125,10 @@ class TransactionsActivity : AppCompatActivity() {
         adapter.notifyDataSetChanged()
 
         preferencesManager.currentMonthFund -= etAmount.text.toString().toFloat()
-        preferencesManager.moneyForToday -= etAmount.text.toString().toFloat()
+
+        if(etDate.text.toString().take(2).toInt() == Helper.dateData("day")){
+            preferencesManager.moneyForToday -= etAmount.text.toString().toFloat()
+        }
 
         // Save the updated list of transactions to SharedPreferences
         preferencesManager.myTransactionsJson = gson.toJson(myTransactions.getMyTransactions())
@@ -145,7 +150,10 @@ class TransactionsActivity : AppCompatActivity() {
                 }
                 R.id.item_delete -> {
                     preferencesManager.currentMonthFund += myTransactions.getMyTransactions()[position].amount
-                    preferencesManager.moneyForToday += myTransactions.getMyTransactions()[position].amount
+                    if(myTransactions.getMyTransactions()[position].date.take(2).toInt() == Helper.dateData("day")){
+                        preferencesManager.moneyForToday += myTransactions.getMyTransactions()[position].amount
+                    }
+
                     myTransactions.getMyTransactions().removeAt(position)
                     preferencesManager.myTransactionsJson = gson.toJson(myTransactions.getMyTransactions())
                     adapter.notifyDataSetChanged()

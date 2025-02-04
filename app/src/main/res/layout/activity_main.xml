@@ -44,7 +44,18 @@
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:background="@drawable/box_style"
-                android:layout_gravity="center_horizontal" />
+                android:layout_gravity="center" />
+
+            <TextView
+                android:id="@+id/tv_money_per_day"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="| 20,00.-"
+                android:textSize="20sp"
+                android:layout_gravity="center"
+                android:textColor="@color/black"
+
+                android:fontFamily="@font/inter_18pt_medium"/>
 
             <View
                 android:layout_width="match_parent"
