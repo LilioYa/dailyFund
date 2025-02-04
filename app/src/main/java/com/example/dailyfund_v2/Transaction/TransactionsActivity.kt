@@ -86,6 +86,7 @@ class TransactionsActivity : AppCompatActivity() {
 
     fun navigateToMain(){
         val intent = Intent(this, MainActivity::class.java)
+        intent.putExtra("fromTransactions", true)
         val options = ActivityOptionsCompat.makeCustomAnimation(
                 this,
                 R.anim.animate_slide_right_enter,

@@ -39,10 +39,12 @@ class MainActivity : AppCompatActivity() {
         val currentDay = dateData("day")
         val currentMonth = dateData("month")
 
-        val fromSettings = intent.getBooleanExtra("fromSettings", false)
+        var fromSettings = intent.getBooleanExtra("fromSettings", false)
+        var fromTransactions = intent.getBooleanExtra("fromTransactions", false)
 
         // Update moneyPerDay if it's not set
         if(fromSettings && preferencesManager.moneyPerDay == Helper.NOT_SET_FLOAT){
+            Helper.showToast(this, "Balance update too")
             updateMoneyPerDay()
             preferencesManager.balance = preferencesManager.moneyPerDay
             preferencesManager.previousMoneyForToday = preferencesManager.moneyPerDay
@@ -57,13 +59,15 @@ class MainActivity : AppCompatActivity() {
 
         // Update moneyForToday ones per day
         if (preferencesManager.lastDayProcessed != currentDay || preferencesManager.moneyForToday == Helper.NOT_SET_FLOAT) {
-            Helper.showToast(this, "New day detected")
+//            Helper.showToast(this, "New day detected")
             preferencesManager.moneyForToday = preferencesManager.moneyPerDay
             preferencesManager.lastDayProcessed = currentDay
         }
 
-        if (preferencesManager.moneyForToday != Helper.NOT_SET_FLOAT) {
+        if (fromTransactions && preferencesManager.moneyForToday != Helper.NOT_SET_FLOAT && preferencesManager.previousMoneyForToday != preferencesManager.moneyForToday) {
+            Helper.showToast(this, "Balance update")
             preferencesManager.balance += preferencesManager.moneyForToday - preferencesManager.previousMoneyForToday
+            preferencesManager.previousMoneyForToday = preferencesManager.moneyForToday
         }
 
         updateValueDisplay()
@@ -93,7 +97,6 @@ class MainActivity : AppCompatActivity() {
             R.anim.animate_slide_left_exit
         )
         startActivity(intent, options.toBundle())
-        preferencesManager.previousMoneyForToday = preferencesManager.moneyForToday
         finish()
     }
 
@@ -112,9 +115,7 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun updateMoneyPerDay(){
-        val previousMoneyPerDay = preferencesManager.moneyPerDay
         preferencesManager.moneyPerDay = preferencesManager.currentMonthFund / daysUntilPayDate()
-
         preferencesManager.previousMoneyForToday = preferencesManager.moneyForToday
 
     }
@@ -138,6 +139,7 @@ class MainActivity : AppCompatActivity() {
             updateMoneyPerDay()
             preferencesManager.moneyForToday +=  preferencesManager.moneyPerDay - lastMoneyPerDay
 
+            preferencesManager.previousMoneyForToday = preferencesManager.moneyForToday
             preferencesManager.balance = 0f
             updateValueDisplay()
         }
