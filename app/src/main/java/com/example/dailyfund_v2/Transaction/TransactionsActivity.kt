@@ -1,3 +1,5 @@
+// TransactionsActivity remains mostly the same but remove immediate balance update logic
+
 package com.example.dailyfund_v2.Transaction
 
 import android.content.Intent
@@ -21,147 +23,119 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
 class TransactionsActivity : AppCompatActivity() {
-    private lateinit var preferencesManager: PreferencesManager
-
+    private lateinit var prefs: PreferencesManager
     private lateinit var gson: Gson
-
-    private lateinit var myTransactions : MyTransactions
-    private lateinit var etTitle : EditText
-    private lateinit var etAmount : EditText
-    private lateinit var etDate : EditText
-    private lateinit var lvTransactions : ListView
-
-    private lateinit var adapter : TransactionAdapter
-
-    private lateinit var preFillDate : String
+    private lateinit var myTransactions: MyTransactions
+    private lateinit var etTitle: EditText
+    private lateinit var etAmount: EditText
+    private lateinit var etDate: EditText
+    private lateinit var lv: ListView
+    private lateinit var adapter: TransactionAdapter
+    private lateinit var preFillDate: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_transactions)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            val bars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(bars.left, bars.top, bars.right, bars.bottom)
             insets
         }
-
-        preferencesManager = PreferencesManager(this)
+        prefs = PreferencesManager(this)
         gson = Gson()
         myTransactions = MyTransactions()
 
         etTitle = findViewById(R.id.et_title)
         etAmount = findViewById(R.id.et_amount)
         etDate = findViewById(R.id.et_date)
-        lvTransactions = findViewById(R.id.lv_transactions)
+        lv = findViewById(R.id.lv_transactions)
 
-        val day = if (Helper.dateData("day") < 10) "0${Helper.dateData("day")}" else Helper.dateData("day")
-        val month = if (Helper.dateData("month") < 10) "0${Helper.dateData("month")}" else Helper.dateData("month")
-        preFillDate = "${day}.${month}.${Helper.dateData("year").toString().takeLast(2)}"
+        val dd = Helper.dateData("day").toString().padStart(2,'0')
+        val mm = Helper.dateData("month").toString().padStart(2,'0')
+        preFillDate = "${dd}.${mm}.${Helper.dateData("year").toString().takeLast(2)}"
         etDate.setText(preFillDate)
 
-        val transactionsHistory: MutableList<Transaction> = gson.fromJson(
-                preferencesManager.myTransactionsJson,
-                object : TypeToken<MutableList<Transaction>>() {}.type
+        val history: MutableList<Transaction> = gson.fromJson(
+            prefs.myTransactionsJson,
+            object : TypeToken<MutableList<Transaction>>() {}.type
         )
-
-        myTransactions.setMyTransactions(transactionsHistory.toMutableList())
-
+        myTransactions.setMyTransactions(history.toMutableList())
         adapter = TransactionAdapter(this, myTransactions)
-        lvTransactions.setAdapter(adapter)
-        adapter.notifyDataSetChanged()
+        lv.adapter = adapter
 
-        val btnSettings = findViewById<ImageButton>(R.id.btn_settings)
-        btnSettings.setOnClickListener{navigateToSettings()}
-
-        val btnMain = findViewById<ImageButton>(R.id.btn_main)
-        btnMain.setOnClickListener{navigateToMain()}
-
-        val btnAddTransaction = findViewById<Button>(R.id.btn_add_transaction)
-        btnAddTransaction.setOnClickListener{addTransaction(btnAddTransaction)}
-
-        lvTransactions.setOnItemClickListener { parent, view, position, id ->
-            showPopup(view, position)
-        }
+        findViewById<ImageButton>(R.id.btn_settings).setOnClickListener { navigateToSettings() }
+        findViewById<ImageButton>(R.id.btn_main).setOnClickListener { navigateToMain() }
+        findViewById<Button>(R.id.btn_add_transaction).setOnClickListener { addTransaction() }
     }
 
-    fun navigateToMain(){
-        val intent = Intent(this, MainActivity::class.java)
-        intent.putExtra("fromTransactions", true)
-        val options = ActivityOptionsCompat.makeCustomAnimation(
-                this,
-                R.anim.animate_slide_right_enter,
-                R.anim.animate_slide_right_exit
-        )
-        startActivity(intent, options.toBundle())
+    private fun navigateToMain() {
+        startActivity(Intent(this, MainActivity::class.java)
+            .putExtra("fromTransactions", true),
+            ActivityOptionsCompat.makeCustomAnimation(
+                this, R.anim.animate_slide_right_enter, R.anim.animate_slide_right_exit
+            ).toBundle())
         finish()
     }
 
-    fun navigateToSettings(){
-        val intent = Intent(this, SettingsActivity::class.java)
-        val options = ActivityOptionsCompat.makeCustomAnimation(
-                this,
-                R.anim.animate_slide_right_enter,
-                R.anim.animate_slide_right_exit
-        )
-        startActivity(intent, options.toBundle())
+    private fun navigateToSettings() {
+        startActivity(Intent(this, SettingsActivity::class.java)
+            .putExtra("fromTransactions", false),
+            ActivityOptionsCompat.makeCustomAnimation(
+                this, R.anim.animate_slide_right_enter, R.anim.animate_slide_right_exit
+            ).toBundle())
         finish()
     }
 
-    private fun addTransaction(view: View){
-        if(etTitle.text.isEmpty() || etAmount.text.isEmpty() || etDate.text.isEmpty()){
+    private fun addTransaction() {
+        if (etTitle.text.isEmpty() || etAmount.text.isEmpty() || etDate.text.isEmpty()) {
             Helper.showToast(this, "Please fill all fields")
             return
         }
-        if(!Helper.checkDateFormat(etDate.text.toString())){
-            Helper.showToast(this, "Please enter a valid date")
+        if (!Helper.checkDateFormat(etDate.text.toString())) {
+            Helper.showToast(this, "Enter valid date")
             return
         }
-        myTransactions.getMyTransactions().add(Transaction(etTitle.text.toString(), etAmount.text.toString().toFloat(), etDate.text.toString()))
-
-        // Sort the list of transactions in descending order based on the date
+        val tx = Transaction(etTitle.text.toString(), etAmount.text.toString().toFloat(), etDate.text.toString())
+        myTransactions.getMyTransactions().add(tx)
         myTransactions.getMyTransactions().sort()
-
-        adapter = TransactionAdapter(this, myTransactions)
-        lvTransactions.setAdapter(adapter)
         adapter.notifyDataSetChanged()
 
-        preferencesManager.currentMonthFund -= etAmount.text.toString().toFloat()
-
-        if(etDate.text.toString().take(2).toInt() == Helper.dateData("day")){
-            preferencesManager.moneyForToday -= etAmount.text.toString().toFloat()
+        // Impact on totals
+        prefs.currentMonthFund -= tx.amount
+        if (etDate.text.toString().take(2).toInt() == Helper.dateData("day")) {
+            prefs.moneyForToday -= tx.amount
         }
+        prefs.myTransactionsJson = gson.toJson(myTransactions.getMyTransactions())
 
-        // Save the updated list of transactions to SharedPreferences
-        preferencesManager.myTransactionsJson = gson.toJson(myTransactions.getMyTransactions())
-
-        etTitle.text.clear()
-        etAmount.text.clear()
-        etDate.text.clear()
-        etDate.setText(preFillDate)
+        // reset inputs
+        etTitle.text.clear(); etAmount.text.clear(); etDate.setText(preFillDate)
     }
 
-    private fun showPopup(view: View, position: Int){
-        val popupMenu = androidx.appcompat.widget.PopupMenu(this, view)
-        popupMenu.inflate(R.menu.transaction_popup)
-
-        popupMenu.setOnMenuItemClickListener{item ->
-            when(item.itemId){
+    // Handle delete and edit in popup:
+    fun showPopup(view: View, position: Int) {
+        val popup = androidx.appcompat.widget.PopupMenu(this, view)
+        popup.inflate(R.menu.transaction_popup)
+        popup.setOnMenuItemClickListener { item ->
+            val tx = myTransactions.getMyTransactions()[position]
+            when (item.itemId) {
                 R.id.item_edit -> {
-                    Helper.showToast(this, "Edit")
+                    // implement edit dialog, update amount/date, then:
+                    // prefs.currentMonthFund += old.amount; prefs.currentMonthFund -= new.amount
+                    // same for moneyForToday if today
+                    // update prefs.myTransactionsJson
+                    adapter.notifyDataSetChanged()
                 }
                 R.id.item_delete -> {
-                    preferencesManager.currentMonthFund += myTransactions.getMyTransactions()[position].amount
-                    if(myTransactions.getMyTransactions()[position].date.take(2).toInt() == Helper.dateData("day")){
-                        preferencesManager.moneyForToday += myTransactions.getMyTransactions()[position].amount
-                    }
-
+                    prefs.currentMonthFund += tx.amount
+                    if (tx.date.take(2).toInt() == Helper.dateData("day")) prefs.moneyForToday += tx.amount
                     myTransactions.getMyTransactions().removeAt(position)
-                    preferencesManager.myTransactionsJson = gson.toJson(myTransactions.getMyTransactions())
+                    prefs.myTransactionsJson = gson.toJson(myTransactions.getMyTransactions())
                     adapter.notifyDataSetChanged()
                 }
             }
             false
         }
-        popupMenu.show()
+        popup.show()
     }
 }
