@@ -56,7 +56,8 @@ class MainActivity : AppCompatActivity() {
 
         // 2. Fin de journée automatique si nouvelle journée détectée
         if (prefs.lastDayProcessed != today) {
-            updateBalance()                       // Clôture de la veille
+            updateBalance()                // Clôture de la veille
+            prefs.balance += prefs.moneyPerDay
             prefs.moneyForToday = prefs.moneyPerDay
             prefs.lastDayProcessed = today
         }
@@ -73,7 +74,7 @@ class MainActivity : AppCompatActivity() {
         if (fromTransactions && prefs.moneyForToday != Helper.NOT_SET_FLOAT) {
             val diff = prefs.previousMoneyForToday - prefs.moneyForToday
             if (diff != 0f) {
-                prefs.balance += diff
+                prefs.balance -= diff
                 prefs.previousMoneyForToday = prefs.moneyForToday
             }
         }
@@ -124,9 +125,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun spread() {
         if (prefs.balance != 0f) {
-            val old = prefs.moneyPerDay
+            //val old = prefs.moneyPerDay
             updateMoneyPerDay()
-            prefs.moneyForToday += (prefs.moneyPerDay - old)
+            prefs.moneyForToday += prefs.moneyPerDay //- old)
             prefs.previousMoneyForToday = prefs.moneyForToday
             prefs.balance = 0f
             updateDisplay()
