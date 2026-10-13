@@ -38,7 +38,17 @@ export default function RootLayout() {
           headerShown: false,
           contentStyle: { backgroundColor: palette.background },
         }}
-      />
+      >
+        {/* Bottom sheet drawn by the screen itself over a dimmed backdrop */}
+        <Stack.Screen
+          name="add"
+          options={{
+            presentation: 'transparentModal',
+            animation: 'fade',
+            contentStyle: { backgroundColor: 'transparent' },
+          }}
+        />
+      </Stack>
     </>
   );
 }

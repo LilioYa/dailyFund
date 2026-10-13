@@ -6,6 +6,7 @@ import { daysUntilPayday } from '@/domain/calendar';
 import type { Cents } from '@/domain/money';
 import { useFormatAmount, useFormatDate, useFormatMoney, useTranslation } from '@/i18n';
 import { useAppStore } from '@/store/appStore';
+import { AddButton } from '@/ui/AddButton';
 import { AppText } from '@/ui/AppText';
 import { Button } from '@/ui/Button';
 import { Card } from '@/ui/Card';
@@ -26,16 +27,20 @@ export default function HomeScreen() {
   if (!budget || payDay === undefined) return null;
 
   return (
-    <Screen
-      title={t('tabs.today')}
-      aside={capitalize(
-        formatDate(budget.currentDay, { weekday: 'long', day: 'numeric', month: 'long' }),
-      )}
-    >
-      <TodayCard budget={budget} payDay={payDay} />
-      <ReserveCard budget={budget} payDay={payDay} />
-      <RecentDays history={budget.history} />
-    </Screen>
+    <View style={{ flex: 1 }}>
+      <Screen
+        title={t('tabs.today')}
+        aside={capitalize(
+          formatDate(budget.currentDay, { weekday: 'long', day: 'numeric', month: 'long' }),
+        )}
+        bottomSpace={100}
+      >
+        <TodayCard budget={budget} payDay={payDay} />
+        <ReserveCard budget={budget} payDay={payDay} />
+        <RecentDays history={budget.history} />
+      </Screen>
+      <AddButton />
+    </View>
   );
 }
 
