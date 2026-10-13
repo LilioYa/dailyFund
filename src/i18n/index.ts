@@ -3,7 +3,8 @@ import { createInstance } from 'i18next';
 import { useCallback, useEffect } from 'react';
 import { initReactI18next, useTranslation } from 'react-i18next';
 
-import { formatMoney, type Cents } from '@/domain/money';
+import type { IsoDate } from '@/domain/calendar';
+import { formatAmount, formatMoney, type Cents } from '@/domain/money';
 import { useAppStore } from '@/store/appStore';
 import { en } from './en';
 import { fr } from './fr';
@@ -33,12 +34,47 @@ export function useLanguageSync(): void {
   }, [preferred]);
 }
 
+/** Locale for numbers and dates: the app language with the device region. */
+function useFormattingLocale(): string {
+  const { i18n: instance } = useTranslation();
+  return formattingLocale(instance.language === 'fr' ? 'fr' : 'en', deviceLocale());
+}
+
 /** Formats cents with the user's currency, in the app language. */
 export function useFormatMoney(): (cents: Cents) => string {
   const currency = useAppStore((s) => s.preferences.currency);
-  const { i18n: instance } = useTranslation();
-  const locale = formattingLocale(instance.language === 'fr' ? 'fr' : 'en', deviceLocale());
+  const locale = useFormattingLocale();
   return useCallback((cents: Cents) => formatMoney(cents, currency, locale), [currency, locale]);
+}
+
+/** Formats cents as a number without currency, for lists (e.g. "1 865,00"). */
+export function useFormatAmount(): (cents: Cents) => string {
+  const locale = useFormattingLocale();
+  return useCallback((cents: Cents) => formatAmount(cents, locale), [locale]);
+}
+
+/** Formats an ISO date in the app language, e.g. { day: 'numeric', month: 'long' } -> "25 octobre". */
+export function useFormatDate(): (date: IsoDate, options: Intl.DateTimeFormatOptions) => string {
+  const locale = useFormattingLocale();
+  return useCallback(
+    (date: IsoDate, options: Intl.DateTimeFormatOptions) => {
+      const [year, month, day] = date.split('-').map(Number);
+      // UTC on both sides so the device time zone can never shift the day
+      return new Intl.DateTimeFormat(locale, { ...options, timeZone: 'UTC' }).format(
+        Date.UTC(year, month - 1, day),
+      );
+    },
+    [locale],
+  );
+}
+
+/** "Day 12 of the month" / "Le 12 du mois", with the French ordinal for the 1st ("Le 1er"). */
+export function useDayOfMonth(): (day: number) => string {
+  const { t } = useTranslation();
+  return useCallback(
+    (day: number) => t('items.dayOfMonth', { day, context: day === 1 ? 'first' : undefined }),
+    [t],
+  );
 }
 
 export { useTranslation };

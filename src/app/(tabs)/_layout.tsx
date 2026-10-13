@@ -1,14 +1,18 @@
 import Feather from '@expo/vector-icons/Feather';
-import { Tabs } from 'expo-router';
+import { Redirect, Tabs } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { useTranslation } from '@/i18n';
+import { useAppStore } from '@/store/appStore';
 import { fonts, usePalette } from '@/ui/theme';
 
 export default function TabsLayout() {
   const { t } = useTranslation();
   const palette = usePalette();
   const insets = useSafeAreaInsets();
+  const isSetUp = useAppStore((s) => s.settings !== null);
+
+  if (!isSetUp) return <Redirect href="/setup" />;
 
   return (
     <Tabs

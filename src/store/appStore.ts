@@ -15,6 +15,7 @@ import {
 } from '@/domain/budget';
 import { localToday, type IsoDate } from '@/domain/calendar';
 import type { Cents } from '@/domain/money';
+import { newId } from './ids';
 
 export type Language = 'fr' | 'en';
 
@@ -73,12 +74,6 @@ const initialData: AppData = {
     reminder: { enabled: false, hour: 20, minute: 0 },
   },
 };
-
-let idCounter = 0;
-function newId(): string {
-  idCounter += 1;
-  return `${Date.now().toString(36)}-${idCounter.toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
-}
 
 function sortNewestFirst(transactions: Transaction[]): Transaction[] {
   return [...transactions].sort((a, b) => (a.date === b.date ? 0 : a.date < b.date ? 1 : -1));
