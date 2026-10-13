@@ -1,12 +1,12 @@
 package com.example.dailyfund_v2.Transaction
 
-import android.app.Activity
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
+import com.example.dailyfund_v2.Helper
 import com.example.dailyfund_v2.R
 
 class TransactionAdapter(
@@ -37,8 +37,9 @@ class TransactionAdapter(
         val transaction = getItem(position)
 
         tvTitle.text = transaction.title
-        tvAmount.text = transaction.amount.toString()
-        tvDate.text = transaction.date
+        tvAmount.text = Helper.formatMoney(transaction.amount)
+        tvAmount.setTextColor(mContext.getColor(if (transaction.amount < 0) R.color.red else R.color.green))
+        tvDate.text = Helper.formatDisplayDate(transaction.localDate)
 
         return oneTransactionLine
     }

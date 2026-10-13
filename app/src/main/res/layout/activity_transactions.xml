@@ -117,7 +117,7 @@
             android:layout_weight="3"
             android:background="@drawable/et_bg"
             android:hint="@string/enter_the_amount"
-            android:inputType="numberDecimal"
+            android:inputType="numberDecimal|numberSigned"
             android:textSize="12sp"
             android:textColor="@color/black"
             android:textColorHint="@color/grey"
