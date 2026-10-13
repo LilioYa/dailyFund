@@ -14,6 +14,7 @@ export const en = {
     'future-date': "The date can't be in the future.",
   },
   reminder: {
+    channel: 'Daily reminder',
     title: 'DailyFund',
     body: '{{left}} left today. Logged your expenses?',
   },
