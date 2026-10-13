@@ -24,7 +24,9 @@ export default function Root({ children }: PropsWithChildren) {
           name="viewport"
           content="width=device-width, initial-scale=1, viewport-fit=cover, shrink-to-fit=no"
         />
-        <meta name="theme-color" content="#ffffff" />
+        {/* Browser bar matches the app background (see src/ui/theme.ts) */}
+        <meta name="theme-color" media="(prefers-color-scheme: light)" content="#F3F5F4" />
+        <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0D1311" />
         <link rel="manifest" href={`${base}/manifest.json`} />
         <link rel="apple-touch-icon" href={`${base}/icons/apple-touch-icon.png`} />
         <meta name="apple-mobile-web-app-capable" content="yes" />
