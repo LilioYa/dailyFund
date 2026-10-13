@@ -8,6 +8,11 @@ export const en = {
     edit: 'Edit',
     undo: 'Undo',
   },
+  tabs: {
+    today: 'Today',
+    transactions: 'Transactions',
+    settings: 'Settings',
+  },
   transactionErrors: {
     'not-set-up': 'Set up your budget first.',
     'zero-amount': 'Enter an amount other than 0.',

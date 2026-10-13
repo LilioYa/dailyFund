@@ -9,6 +9,11 @@ export const fr: Translations = {
     edit: 'Modifier',
     undo: 'Annuler',
   },
+  tabs: {
+    today: 'Aujourd’hui',
+    transactions: 'Mouvements',
+    settings: 'Réglages',
+  },
   transactionErrors: {
     'not-set-up': 'Configure d’abord ton budget.',
     'zero-amount': 'Entre un montant différent de 0.',
