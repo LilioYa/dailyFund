@@ -1,5 +1,5 @@
 import Feather from '@expo/vector-icons/Feather';
-import { useState } from 'react';
+import { useState, type ReactNode } from 'react';
 import { Pressable, View } from 'react-native';
 
 import { centsToInput, parseAmount, type Cents } from '@/domain/money';
@@ -27,12 +27,20 @@ interface Props<T extends Item> {
   /** Recurring incomes have a day of month; fixed charges don't. */
   withDay: boolean;
   addLabel: string;
+  /** Rendered first inside the same card, e.g. the main income above other incomes. */
+  leading?: ReactNode;
 }
 
 type Editing = { id: string | null; name: string; amount: string; day: number };
 
 /** List of named amounts edited in place: tap a row to edit or delete it, "+" to add one. */
-export function EditableItems<T extends Item>({ items, onChange, withDay, addLabel }: Props<T>) {
+export function EditableItems<T extends Item>({
+  items,
+  onChange,
+  withDay,
+  addLabel,
+  leading,
+}: Props<T>) {
   const { t } = useTranslation();
   const formatAmount = useFormatAmount();
   const dayOfMonth = useDayOfMonth();
@@ -111,6 +119,7 @@ export function EditableItems<T extends Item>({ items, onChange, withDay, addLab
 
   return (
     <Card>
+      {leading}
       {items.map((item) =>
         editing?.id === item.id ? (
           <View key={item.id} style={{ borderBottomWidth: 1, borderBottomColor: palette.border }}>

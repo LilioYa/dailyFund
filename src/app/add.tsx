@@ -18,6 +18,7 @@ import { useUndo } from '@/store/undo';
 import { applyKey, type Key } from '@/ui/amountKeys';
 import { AppText } from '@/ui/AppText';
 import { Button } from '@/ui/Button';
+import { Choices } from '@/ui/Choices';
 import { Keypad } from '@/ui/Keypad';
 import { Segmented } from '@/ui/Segmented';
 import { capitalize } from '@/ui/text';
@@ -295,38 +296,16 @@ function DayChoices({
   selected: IsoDate;
   onSelect: (date: IsoDate) => void;
 }) {
-  const palette = usePalette();
+  const { t } = useTranslation();
   const dayLabel = useDayLabel();
   const today = localToday();
   const days = Array.from({ length: PICKABLE_DAYS }, (_, i) => addDays(today, -i));
   return (
-    <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 8 }}>
-      {days.map((day) => {
-        const isSelected = day === selected;
-        return (
-          <Pressable
-            key={day}
-            accessibilityRole="radio"
-            accessibilityState={{ selected: isSelected }}
-            onPress={() => onSelect(day)}
-            style={{
-              minHeight: 44,
-              paddingHorizontal: 14,
-              borderRadius: radius.pill,
-              justifyContent: 'center',
-              backgroundColor: isSelected ? palette.accent : palette.surfaceMuted,
-            }}
-          >
-            <AppText
-              size={15}
-              weight="bold"
-              style={{ color: isSelected ? palette.onAccent : palette.text }}
-            >
-              {dayLabel(day)}
-            </AppText>
-          </Pressable>
-        );
-      })}
-    </View>
+    <Choices
+      accessibilityLabel={t('quickAdd.when')}
+      options={days.map((day) => ({ value: day, label: dayLabel(day) }))}
+      value={selected}
+      onSelect={onSelect}
+    />
   );
 }
