@@ -1,6 +1,6 @@
 import { getLocales } from 'expo-localization';
 import { createInstance } from 'i18next';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { initReactI18next, useTranslation } from 'react-i18next';
 
 import { formatMoney, type Cents } from '@/domain/money';
@@ -38,7 +38,7 @@ export function useFormatMoney(): (cents: Cents) => string {
   const currency = useAppStore((s) => s.preferences.currency);
   const { i18n: instance } = useTranslation();
   const locale = formattingLocale(instance.language === 'fr' ? 'fr' : 'en', deviceLocale());
-  return (cents) => formatMoney(cents, currency, locale);
+  return useCallback((cents: Cents) => formatMoney(cents, currency, locale), [currency, locale]);
 }
 
 export { useTranslation };

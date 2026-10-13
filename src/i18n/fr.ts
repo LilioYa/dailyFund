@@ -15,6 +15,7 @@ export const fr: Translations = {
     'future-date': 'La date ne peut pas être dans le futur.',
   },
   reminder: {
+    channel: 'Rappel quotidien',
     title: 'DailyFund',
     body: 'Il te reste {{left}} aujourd’hui. Dépenses notées ?',
   },
