@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingTop="6dp"
+    android:paddingBottom="6dp">
+
+    <TextView
+        android:id="@+id/tv_day_date"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:gravity="start|center_vertical"
+        android:text="@string/date"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:fontFamily="@font/inter_18pt_medium"
+        android:paddingStart="2dp" />
+
+    <TextView
+        android:id="@+id/tv_day_spent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="4"
+        android:gravity="center"
+        android:textColor="@color/grey"
+        android:textSize="14sp"
+        android:fontFamily="@font/inter_18pt_medium" />
+
+    <TextView
+        android:id="@+id/tv_day_diff"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:gravity="end|center_vertical"
+        android:textColor="@color/green"
+        android:textSize="18sp"
+        android:fontFamily="@font/inter_18pt_bold"
+        android:paddingEnd="2dp" />
+</LinearLayout>

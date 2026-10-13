@@ -11,6 +11,7 @@ import androidx.core.app.ActivityOptionsCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.dailyfund_v2.Transaction.TransactionsActivity
+import java.time.LocalDate
 
 class SettingsActivity : AppCompatActivity() {
     private lateinit var preferencesManager: PreferencesManager
@@ -45,7 +46,8 @@ class SettingsActivity : AppCompatActivity() {
         val payDate = if (preferencesManager.payDate == Helper.NOT_SET_INT) "" else preferencesManager.payDate.toString()
         etPayDate.setText(payDate)
 
-        val currentMonthFund = if (preferencesManager.currentMonthFund == Helper.NOT_SET_FLOAT) "" else preferencesManager.currentMonthFund.toString()
+        val state = preferencesManager.advanceBudgetToToday()
+        val currentMonthFund = if (state.currentDay == null) "" else state.currentMonthFund.toString()
         etCurrentMonthFund.setText(currentMonthFund)
 
         val btnMain = findViewById<ImageButton>(R.id.btn_main)
@@ -61,7 +63,6 @@ class SettingsActivity : AppCompatActivity() {
 
     private fun navigateToMain(){
         val intent = Intent(this, MainActivity::class.java)
-        intent.putExtra("fromSettings", true)
         val options = ActivityOptionsCompat.makeCustomAnimation(
                 this,
                 R.anim.animate_slide_left_enter,
@@ -85,18 +86,31 @@ class SettingsActivity : AppCompatActivity() {
 
 
     private fun saveValue() {
-        var isValueValid = Helper.saveData(this, etSalary, 0f, "salary")
-                && Helper.saveData(this, etDesiredMonthlySavings, 0f, "desiredMonthlySavings")
-                && Helper.saveData(this, etPayDate, 0, "payDate")
-                && Helper.saveData(this, etCurrentMonthFund, 0f, "currentMonthFund")
+        val salary = etSalary.text.toString().toFloatOrNull()
+        val desiredMonthlySavings = etDesiredMonthlySavings.text.toString().toFloatOrNull()
+        val payDate = etPayDate.text.toString().toIntOrNull()
+        val currentMonthFund = etCurrentMonthFund.text.toString().toFloatOrNull()
 
-        if (isValueValid) {
-            preferencesManager.salary = etSalary.text.toString().toFloat()
-            preferencesManager.desiredMonthlySavings = etDesiredMonthlySavings.text.toString().toFloat()
-            preferencesManager.payDate = etPayDate.text.toString().toInt()
-            preferencesManager.currentMonthFund = etCurrentMonthFund.text.toString().toFloat()
-            Helper.showToast(this, "Changes applied")
-            navigateToMain()
+        if (salary == null || desiredMonthlySavings == null || payDate == null || currentMonthFund == null) {
+            Helper.showToast(this, "Please fill all fields with valid numbers")
+            return
         }
+        if (payDate !in 1..31) {
+            Helper.showToast(this, "Pay date must be a day between 1 and 31")
+            return
+        }
+
+        // Close elapsed days with the old settings before applying the new ones
+        val state = preferencesManager.advanceBudgetToToday()
+        preferencesManager.salary = salary
+        preferencesManager.desiredMonthlySavings = desiredMonthlySavings
+        preferencesManager.payDate = payDate
+        preferencesManager.budgetState = if (state.currentDay == null) {
+            Budget.setUp(currentMonthFund, LocalDate.now(), payDate)
+        } else {
+            Budget.recalculate(state.copy(currentMonthFund = currentMonthFund), payDate)
+        }
+        Helper.showToast(this, "Changes applied")
+        navigateToMain()
     }
 }
