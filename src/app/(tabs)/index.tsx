@@ -3,7 +3,6 @@ import { Pressable, View } from 'react-native';
 
 import { dayRecordDiff, spread, type BudgetState, type DayRecord } from '@/domain/budget';
 import { daysUntilPayday } from '@/domain/calendar';
-import type { Cents } from '@/domain/money';
 import { useFormatAmount, useFormatDate, useFormatMoney, useTranslation } from '@/i18n';
 import { useAppStore } from '@/store/appStore';
 import { AddButton } from '@/ui/AddButton';
@@ -11,7 +10,7 @@ import { AppText } from '@/ui/AppText';
 import { Button } from '@/ui/Button';
 import { Card } from '@/ui/Card';
 import { Screen } from '@/ui/Screen';
-import { capitalize } from '@/ui/text';
+import { capitalize, withSign } from '@/ui/text';
 import { radius, usePalette } from '@/ui/theme';
 
 /** How many closed days the home screen lists. */
@@ -131,11 +130,11 @@ function ReserveCard({ budget, payDay }: { budget: BudgetState; payDay: number }
           color={budget.balance < 0 ? 'negative' : 'accent'}
           tabular
         >
-          {signed(budget.balance, formatMoney)}
+          {withSign(budget.balance, formatMoney)}
         </AppText>
         {budget.balance !== 0 ? (
           <AppText size={13} color="textMuted">
-            {t('home.spreadHint', { amount: signed(perDayChange, formatMoney) })}
+            {t('home.spreadHint', { amount: withSign(perDayChange, formatMoney) })}
           </AppText>
         ) : null}
       </View>
@@ -225,10 +224,4 @@ function RecentDays({ history }: { history: DayRecord[] }) {
       </Card>
     </View>
   );
-}
-
-/** "+42,00 CHF" / "−18,20 CHF": an explicit sign on both sides. */
-function signed(cents: Cents, format: (cents: Cents) => string): string {
-  if (cents === 0) return format(0);
-  return `${cents > 0 ? '+' : '−'}${format(Math.abs(cents))}`;
 }

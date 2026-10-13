@@ -50,6 +50,13 @@ export const fr: Translations = {
     fromReserve: 'Pris sur ta réserve ({{total}})',
     toReserve: 'Ira dans ta réserve ({{total}})',
   },
+  transactions: {
+    empty: 'Aucun mouvement pour l’instant. Touche Ajouter pour noter ta première dépense.',
+    untitled: 'Sans titre',
+    delete: 'Supprimer ce mouvement',
+    deleted: '« {{title}} » supprimé',
+    deletedUntitled: 'Mouvement supprimé',
+  },
   setup: {
     step: 'Étape {{step}} sur {{total}}',
     incomeTitle: 'D’où vient ton argent ?',

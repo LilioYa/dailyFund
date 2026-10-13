@@ -14,6 +14,7 @@ import { addDays, localToday, type IsoDate } from '@/domain/calendar';
 import { centsToInput, parseAmount, type Cents } from '@/domain/money';
 import { useFormatDate, useFormatMoney, useTranslation } from '@/i18n';
 import { useAppStore, type TransactionInput } from '@/store/appStore';
+import { useUndo } from '@/store/undo';
 import { applyKey, type Key } from '@/ui/amountKeys';
 import { AppText } from '@/ui/AppText';
 import { Button } from '@/ui/Button';
@@ -37,6 +38,8 @@ export default function AddScreen() {
   const existing = useAppStore((s) => s.transactions.find((tx) => tx.id === id));
   const addTransaction = useAppStore((s) => s.addTransaction);
   const updateTransaction = useAppStore((s) => s.updateTransaction);
+  const deleteTransaction = useAppStore((s) => s.deleteTransaction);
+  const offerUndo = useUndo((s) => s.offer);
 
   const [kind, setKind] = useState<Kind>(existing && existing.amount > 0 ? 'income' : 'expense');
   const [amountText, setAmountText] = useState(
@@ -59,6 +62,13 @@ export default function AddScreen() {
     const result = existing ? updateTransaction(existing.id, input) : addTransaction(input);
     if (result.ok) close();
     else setError(t(`transactionErrors.${result.error}`));
+  };
+
+  const remove = () => {
+    if (!existing) return;
+    const deleted = deleteTransaction(existing.id);
+    if (deleted) offerUndo(deleted);
+    close();
   };
 
   return (
@@ -194,6 +204,17 @@ export default function AddScreen() {
           disabled={magnitude === 0}
           onPress={save}
         />
+        {existing ? (
+          <Pressable
+            accessibilityRole="button"
+            onPress={remove}
+            style={{ minHeight: 44, alignItems: 'center', justifyContent: 'center' }}
+          >
+            <AppText size={15} weight="extrabold" color="negative">
+              {t('transactions.delete')}
+            </AppText>
+          </Pressable>
+        ) : null}
       </ScrollView>
     </View>
   );
