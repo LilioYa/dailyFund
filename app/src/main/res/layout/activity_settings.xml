@@ -51,6 +51,7 @@
 
             <EditText
                 android:id="@+id/et_salary"
+                android:inputType="numberDecimal"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:background="@drawable/et_bg"
@@ -75,6 +76,7 @@
 
             <EditText
                 android:id="@+id/et_desired_monthly_savings"
+                android:inputType="numberDecimal"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:background="@drawable/et_bg"
@@ -98,7 +100,8 @@
                 android:textSize="16sp" />
 
             <EditText
-                android:id="@+id/et_payday_date"
+                android:id="@+id/et_pay_date"
+                android:inputType="number"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:background="@drawable/et_bg"
@@ -123,6 +126,7 @@
 
             <EditText
                 android:id="@+id/et_current_month_fund"
+                android:inputType="numberDecimal"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:background="@drawable/et_bg"
