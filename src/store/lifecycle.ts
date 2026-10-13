@@ -13,6 +13,17 @@ export function useHydrated(): boolean {
   );
 }
 
+/** Resolves once the saved data has been loaded, for code outside React (the widget task). */
+export function whenHydrated(): Promise<void> {
+  if (useAppStore.persist.hasHydrated()) return Promise.resolve();
+  return new Promise((resolve) => {
+    const unsubscribe = useAppStore.persist.onFinishHydration(() => {
+      unsubscribe();
+      resolve();
+    });
+  });
+}
+
 /** Closes elapsed days once loaded, and again each time the app comes back to the foreground. */
 export function useAdvanceOnForeground(hydrated: boolean): void {
   useEffect(() => {

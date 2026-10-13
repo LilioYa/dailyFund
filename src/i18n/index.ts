@@ -5,7 +5,7 @@ import { initReactI18next, useTranslation } from 'react-i18next';
 
 import type { IsoDate } from '@/domain/calendar';
 import { formatAmount, formatMoney, type Cents } from '@/domain/money';
-import { useAppStore } from '@/store/appStore';
+import { useAppStore, type Language } from '@/store/appStore';
 import { en } from './en';
 import { fr } from './fr';
 import { formattingLocale, resolveLanguage } from './locale';
@@ -32,6 +32,17 @@ export function useLanguageSync(): void {
   useEffect(() => {
     i18n.changeLanguage(resolveLanguage(preferred, deviceLocale()));
   }, [preferred]);
+}
+
+/** Translations and money formatting outside React (the Android widget runs without the app UI). */
+export function fixedFormatting(preferred: Language | null, currency: string) {
+  const device = deviceLocale();
+  const language = resolveLanguage(preferred, device);
+  const locale = formattingLocale(language, device);
+  return {
+    t: i18n.getFixedT(language),
+    formatMoney: (cents: Cents) => formatMoney(cents, currency, locale),
+  };
 }
 
 /** Locale for numbers and dates: the app language with the device region. */

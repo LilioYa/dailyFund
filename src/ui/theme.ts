@@ -41,6 +41,9 @@ const dark: Palette = {
   snackbarAction: '#0E6B62',
 };
 
+/** Both palettes, for places that render outside React Native views (the Android widget). */
+export const palettes = { light, dark };
+
 export function usePalette(): Palette {
   return useColorScheme() === 'dark' ? dark : light;
 }

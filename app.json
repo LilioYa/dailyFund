@@ -42,6 +42,30 @@
           "icon": "./assets/images/notification-icon.png",
           "color": "#0E6B62"
         }
+      ],
+      [
+        "react-native-android-widget",
+        {
+          "fonts": [
+            "./node_modules/@expo-google-fonts/manrope/600SemiBold/Manrope_600SemiBold.ttf",
+            "./node_modules/@expo-google-fonts/manrope/700Bold/Manrope_700Bold.ttf",
+            "./node_modules/@expo-google-fonts/manrope/800ExtraBold/Manrope_800ExtraBold.ttf"
+          ],
+          "widgets": [
+            {
+              "name": "Today",
+              "label": "DailyFund",
+              "description": "Today's money and your reserve",
+              "minWidth": "250dp",
+              "minHeight": "110dp",
+              "targetCellWidth": 4,
+              "targetCellHeight": 2,
+              "resizeMode": "horizontal|vertical",
+              "updatePeriodMillis": 1800000,
+              "previewImage": "./assets/widget-preview/today.png"
+            }
+          ]
+        }
       ]
     ],
     "experiments": {
