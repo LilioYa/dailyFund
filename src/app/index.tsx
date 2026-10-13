@@ -1,9 +1,12 @@
 import { StyleSheet, Text, View } from 'react-native';
 
+import { useTranslation } from '@/i18n';
+
 export default function Index() {
+  const { t } = useTranslation();
   return (
     <View style={styles.container}>
-      <Text>DailyFund</Text>
+      <Text>{t('appName')}</Text>
     </View>
   );
 }
