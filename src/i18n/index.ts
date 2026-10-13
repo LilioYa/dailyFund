@@ -4,7 +4,7 @@ import { useCallback, useEffect } from 'react';
 import { initReactI18next, useTranslation } from 'react-i18next';
 
 import type { IsoDate } from '@/domain/calendar';
-import { formatAmount, formatMoney, type Cents } from '@/domain/money';
+import { decimalSeparator, formatAmount, formatMoney, type Cents } from '@/domain/money';
 import { useAppStore, type Language } from '@/store/appStore';
 import { en } from './en';
 import { fr } from './fr';
@@ -58,10 +58,17 @@ export function useFormatMoney(): (cents: Cents) => string {
   return useCallback((cents: Cents) => formatMoney(cents, currency, locale), [currency, locale]);
 }
 
-/** Formats cents as a number without currency, for lists (e.g. "1 865,00"). */
+/** Formats cents like useFormatMoney without the currency, for lists (e.g. "1 865.00"). */
 export function useFormatAmount(): (cents: Cents) => string {
+  const currency = useAppStore((s) => s.preferences.currency);
   const locale = useFormattingLocale();
-  return useCallback((cents: Cents) => formatAmount(cents, locale), [locale]);
+  return useCallback((cents: Cents) => formatAmount(cents, currency, locale), [currency, locale]);
+}
+
+/** The decimal separator to show while typing an amount, the same as in formatted amounts. */
+export function useDecimalSeparator(): string {
+  const currency = useAppStore((s) => s.preferences.currency);
+  return decimalSeparator(currency, useFormattingLocale());
 }
 
 /** Formats an ISO date in the app language, e.g. { day: 'numeric', month: 'long' } -> "25 octobre". */

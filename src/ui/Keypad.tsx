@@ -1,7 +1,7 @@
 import Feather from '@expo/vector-icons/Feather';
 import { Pressable, View } from 'react-native';
 
-import { useTranslation } from '@/i18n';
+import { useDecimalSeparator, useTranslation } from '@/i18n';
 import { KEYS, type Key } from './amountKeys';
 import { AppText } from './AppText';
 import { usePalette } from './theme';
@@ -10,6 +10,7 @@ import { usePalette } from './theme';
 export function Keypad({ onKey }: { onKey: (key: Key) => void }) {
   const { t } = useTranslation();
   const palette = usePalette();
+  const separator = useDecimalSeparator();
   return (
     <View
       accessibilityLabel={t('quickAdd.keypad')}
@@ -19,7 +20,7 @@ export function Keypad({ onKey }: { onKey: (key: Key) => void }) {
         <Pressable
           key={key}
           accessibilityRole="button"
-          accessibilityLabel={key === 'back' ? t('quickAdd.erase') : key}
+          accessibilityLabel={key === 'back' ? t('quickAdd.erase') : key === ',' ? separator : key}
           onPress={() => onKey(key)}
           style={({ pressed }) => ({
             // Three keys per row: (100% - 2 gaps) / 3
@@ -36,7 +37,7 @@ export function Keypad({ onKey }: { onKey: (key: Key) => void }) {
             <Feather name="delete" size={24} color={palette.text} />
           ) : (
             <AppText size={22} weight="bold">
-              {key}
+              {key === ',' ? separator : key}
             </AppText>
           )}
         </Pressable>
