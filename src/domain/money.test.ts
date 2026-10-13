@@ -1,5 +1,5 @@
 import { describe, expect, it } from '@jest/globals';
-import { centsToInput, formatAmount, formatMoney, parseAmount } from './money';
+import { centsToInput, decimalSeparator, formatAmount, formatMoney, parseAmount } from './money';
 
 describe('money', () => {
   it('parses amounts typed by the user', () => {
@@ -28,9 +28,18 @@ describe('money', () => {
     expect(formatMoney(123_456, 'USD', 'en-US')).toBe('$1,234.56');
   });
 
-  it('formats without currency', () => {
-    expect(formatAmount(186_500, 'en-US')).toBe('1,865.00');
-    expect(formatAmount(-1_250, 'en-US')).toBe('-12.50');
+  it('formats without currency, with the same separators as the currency format', () => {
+    expect(formatAmount(186_500, 'USD', 'en-US')).toBe('1,865.00');
+    expect(formatAmount(-1_250, 'CHF', 'en-US')).toBe('-12.50');
+    // Swiss francs use "." even in French, while plain French numbers use ","
+    expect(formatAmount(186_550, 'CHF', 'fr-CH')).toBe('1 865.50');
+    expect(formatAmount(-186_550, 'EUR', 'fr-FR')).toBe('-1 865,50');
+  });
+
+  it('finds the decimal separator of the currency format', () => {
+    expect(decimalSeparator('USD', 'en-US')).toBe('.');
+    expect(decimalSeparator('CHF', 'fr-CH')).toBe('.');
+    expect(decimalSeparator('EUR', 'fr-FR')).toBe(',');
   });
 
   it('converts cents back to an editable string', () => {

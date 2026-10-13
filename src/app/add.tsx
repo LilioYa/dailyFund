@@ -12,10 +12,10 @@ import {
 } from '@/domain/budget';
 import { addDays, localToday, type IsoDate } from '@/domain/calendar';
 import { centsToInput, parseAmount, type Cents } from '@/domain/money';
-import { useFormatDate, useFormatMoney, useTranslation } from '@/i18n';
+import { useDecimalSeparator, useFormatDate, useFormatMoney, useTranslation } from '@/i18n';
 import { useAppStore, type TransactionInput } from '@/store/appStore';
 import { useUndo } from '@/store/undo';
-import { applyKey, type Key } from '@/ui/amountKeys';
+import { applyKey, displayAmountText, type Key } from '@/ui/amountKeys';
 import { AppText } from '@/ui/AppText';
 import { Button } from '@/ui/Button';
 import { Choices } from '@/ui/Choices';
@@ -223,6 +223,7 @@ export default function AddScreen() {
 
 function AmountDisplay({ text, kind }: { text: string; kind: Kind }) {
   const currency = useAppStore((s) => s.preferences.currency);
+  const separator = useDecimalSeparator();
   const sign = kind === 'expense' ? '−' : '+';
   return (
     <AppText
@@ -234,7 +235,7 @@ function AmountDisplay({ text, kind }: { text: string; kind: Kind }) {
       numberOfLines={1}
       style={{ letterSpacing: -1 }}
     >
-      {`${sign}${text || '0'} `}
+      {`${sign}${displayAmountText(text, separator) || '0'} `}
       <AppText size={22} weight="bold" color="textMuted">
         {currency}
       </AppText>

@@ -1,6 +1,6 @@
 import { describe, expect, it } from '@jest/globals';
 
-import { applyKey, type Key } from './amountKeys';
+import { applyKey, displayAmountText, type Key } from './amountKeys';
 
 const type = (keys: Key[]) => keys.reduce((text, key) => applyKey(text, key), '');
 
@@ -22,5 +22,13 @@ describe('applyKey', () => {
     expect(type(['0', '5'])).toBe('5');
     expect(type(['4', '2', 'back'])).toBe('4');
     expect(type(['back'])).toBe('');
+  });
+});
+
+describe('displayAmountText', () => {
+  it('shows the locale separator', () => {
+    expect(displayAmountText('12,5', '.')).toBe('12.5');
+    expect(displayAmountText('12,5', ',')).toBe('12,5');
+    expect(displayAmountText('12', '.')).toBe('12');
   });
 });
