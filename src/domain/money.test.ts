@@ -32,8 +32,9 @@ describe('money', () => {
     expect(formatAmount(186_500, 'USD', 'en-US')).toBe('1,865.00');
     expect(formatAmount(-1_250, 'CHF', 'en-US')).toBe('-12.50');
     // Swiss francs use "." even in French, while plain French numbers use ","
-    expect(formatAmount(186_550, 'CHF', 'fr-CH')).toBe('1 865.50');
-    expect(formatAmount(-186_550, 'EUR', 'fr-FR')).toBe('-1 865,50');
+    // (the thousands separator differs between ICU versions: space, narrow space or ')
+    expect(formatAmount(186_550, 'CHF', 'fr-CH')).toMatch(/^1\D865\.50$/);
+    expect(formatAmount(-186_550, 'EUR', 'fr-FR')).toMatch(/^-1\D865,50$/);
   });
 
   it('finds the decimal separator of the currency format', () => {
