@@ -49,6 +49,13 @@ export const en = {
     fromReserve: 'Taken from your reserve ({{total}})',
     toReserve: 'Goes to your reserve ({{total}})',
   },
+  transactions: {
+    empty: 'No transactions yet. Tap Add to log your first expense.',
+    untitled: 'Untitled',
+    delete: 'Delete this transaction',
+    deleted: '“{{title}}” deleted',
+    deletedUntitled: 'Transaction deleted',
+  },
   setup: {
     step: 'Step {{step}} of {{total}}',
     incomeTitle: 'Where does your money come from?',
