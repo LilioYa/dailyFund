@@ -134,6 +134,9 @@ export const en = {
     title: 'DailyFund',
     body: '{{left}} left today. Logged your expenses?',
   },
+  widget: {
+    setUp: 'Open DailyFund to set up your budget.',
+  },
 };
 
 /** Same keys as `en`, any string values. */

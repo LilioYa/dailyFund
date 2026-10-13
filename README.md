@@ -16,12 +16,16 @@ Requires Node.js 22.
 
 ```bash
 npm ci
-npm start          # dev server: press a (Android), w (web)
+npm run web        # web app in the browser
+npm run android    # builds and installs the Android app (needs Android Studio's SDK and JDK 17)
 ```
+
+The Android app uses native code (widget, notifications), so it doesn't run in Expo Go: `npm run android`
+builds it locally (`android/` is generated and not committed).
 
 | Script              | What it does                    |
 | ------------------- | ------------------------------- |
-| `npm run android`   | Start and open on Android       |
+| `npm run android`   | Build and run on Android        |
 | `npm run web`       | Start and open in the browser   |
 | `npm run lint`      | ESLint                          |
 | `npm run typecheck` | TypeScript check                |

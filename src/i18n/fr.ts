@@ -137,4 +137,7 @@ export const fr: Translations = {
     title: 'DailyFund',
     body: 'Il te reste {{left}} aujourd’hui. Dépenses notées ?',
   },
+  widget: {
+    setUp: 'Ouvre DailyFund pour configurer ton budget.',
+  },
 };

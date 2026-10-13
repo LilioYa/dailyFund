@@ -11,8 +11,14 @@ import { StatusBar } from 'expo-status-bar';
 
 import { useLanguageSync } from '@/i18n';
 import { useReminderSync } from '@/platform/useReminderSync';
+import { useWidgetSync } from '@/platform/widget/useWidgetSync';
 import { useAdvanceOnForeground, useHydrated } from '@/store/lifecycle';
 import { usePalette } from '@/ui/theme';
+
+export const unstable_settings = {
+  // Opening quick add from the widget (dailyfund://add) keeps the tabs underneath
+  anchor: '(tabs)',
+};
 
 export default function RootLayout() {
   const hydrated = useHydrated();
@@ -27,6 +33,7 @@ export default function RootLayout() {
   useAdvanceOnForeground(hydrated);
   useLanguageSync();
   useReminderSync(hydrated);
+  useWidgetSync(hydrated);
 
   // Render nothing until data and fonts are loaded, so screens never flash an empty budget
   if (!hydrated || !fontsLoaded) return null;
