@@ -1,32 +1,52 @@
 # DailyFund
 
-Android app that turns the money left until your next payday into a **daily spending budget**, tracks what you spend,
-and carries any surplus or overspending forward.
+Turns the money left until your next payday into a **daily spending budget**, tracks what you spend, and carries any
+surplus or overspending forward.
 
-## Features
-- **Daily budget**: money left this month ÷ days until the next pay day. On pay day, `salary - desired savings` is
-  added to the month's money.
-- **Transactions** (entered manually): a negative amount is an expense, a positive amount is income.
-  - An expense dated today reduces today's money. An expense on an earlier day reduces the balance.
-  - Income is added to the month's money and to the balance, never to today's money.
-  - Long-press a transaction to edit or delete it.
-- **Balance**: each day's leftover (or overspending) is added to the balance when the day ends, including days the
-  app wasn't opened.
-- **History**: per-day budget vs spent on the main screen, green when under budget, red when over.
-- **Spread**: spreads the whole balance over the remaining days by recalculating the daily budget, then resets the
-  balance to 0.
+One TypeScript codebase ([Expo](https://expo.dev) + React Native):
 
-## Setup
-Open **Settings** and enter your salary, desired monthly savings, pay date (day of the month; 31 means the last day
-of shorter months) and the money you have left this month.
+- **Android**: native app (APK), with home-screen widget and daily reminder.
+- **iPhone**: installable web app (open the link in Safari → Share → Add to Home Screen).
 
-## Build
-Requires Android Studio's bundled JDK 17 (Gradle 8.7 doesn't run on newer JDKs) and min SDK 26.
+The previous Kotlin Android prototype is kept in tag [`v0.1.0`](../../tree/v0.1.0).
 
-```
-./gradlew testDebugUnitTest assembleDebug
+## Getting started
+
+Requires Node.js 22.
+
+```bash
+npm ci
+npm run web        # web app in the browser
+npm run android    # builds and installs the Android app (needs Android Studio's SDK and JDK 17)
 ```
 
-## Not done yet
-- Automatic transaction retrieval
-- Search and sort on the Transactions screen
+The Android app uses native code (widget, notifications), so it doesn't run in Expo Go: `npm run android`
+builds it locally (`android/` is generated and not committed).
+
+| Script              | What it does                    |
+| ------------------- | ------------------------------- |
+| `npm run android`   | Build and run on Android        |
+| `npm run web`       | Start and open in the browser   |
+| `npm run lint`      | ESLint                          |
+| `npm run typecheck` | TypeScript check                |
+| `npm test`          | Jest unit tests                 |
+| `npm run format`    | Format everything with Prettier |
+
+## Project structure
+
+```
+src/
+  app/        screens and layouts (Expo Router: one file = one route)
+  domain/     pure budget logic, no React/Expo imports, fully unit-tested
+  store/      app state and persistence
+  i18n/       translations (fr, en)
+  platform/   Android-only features (widget, reminders), isolated per platform
+  ui/         shared components and theme
+```
+
+## Contributing
+
+- `main` holds releases (tagged `vX.Y.Z`), `develop` is the integration branch.
+- Each change gets its own branch off `develop` (`feature/…`, `fix/…`, `chore/…`, `docs/…`) and is merged
+  back through a pull request; CI must pass.
+- Commits follow [Conventional Commits](https://www.conventionalcommits.org) (`feat:`, `fix:`, `chore:`, …).
